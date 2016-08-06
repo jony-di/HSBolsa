@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class="html">
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <link rel="shortcut icon" href="Recursos/images/favicon.ico" />
+    <title>INICIO</title>
+
+    <!-- CSS -->
+    <link href="Recursos/css/tema.css?ver=1" rel="stylesheet" type="text/css" />
+    <link href="Recursos/css/index.css?ver=1" rel="stylesheet" type="text/css" />
+    <link href="Recursos/jqueryui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="Recursos/css/blueberry.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Scripts -->
+    <script src="Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="Recursos/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="Recursos/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="Recursos/js/jquery.blueberry.js" type="text/javascript"></script>
+    <script src="Recursos/js/jquery.watch.js" type="text/javascript"></script>
+    <script src="Recursos/js/seguridad.js?ver=1" type="text/javascript"></script>
+    <script src="Recursos/js/default.js?ver=1" type="text/javascript"></script>
+    <script src="Recursos/js/Global.js?ver=1" type="text/javascript"></script>
+    
+    <!-- Other scripts -->
+</head>
+
+<body onload="inicio()">
+    <div class="margen">
+        <header>
+            <img src="Recursos/images/Logo1.png" />
+            <div id="header"><h1>Bolsa de Trabajo</h1></div>
+        </header>
+       
+        <nav>
+            <ul>
+                <li onclick="llamaPagina('default')"><span class="icono icon-home"></span><span class="title">Inicio</span></li>
+                <li><div></div></li>
+                <li onclick="llamaPagina('vacantes')"><span class="icono icon-briefcase"></span><span class="title">Ver Ofertas</span></li>
+                <li><div></div></li>
+                <li onclick="llamaPagina('registro')"><span class="icono icon-profile"></span><span class="title">Ingreso CV</span></li>
+                <li><div></div></li>
+                <li onclick="llamaPagina('info')"><span class="icono icon-user-tie"></span><span class="title">Cómo Postular</span></li>
+                <li><div></div></li>
+                <li onclick="llamaPagina('examenes')"><span class="icono icon-pencil2"></span><span class="title">Examenes</span></li>
+
+            </ul>
+        </nav>
+        <div class="derecha">
+            <div class="login">
+                <div id="login">
+                    <form id="frmlogin">
+                        <label>Ingreso de usuarios</label>
+                        <label><span class="icon-user"></span><input name="usuario" id="usuario" type="text" placeholder="Usuario"/></label>
+                        <label><span class="icon-key"></span><input name="clave" type="password" placeholder="Password" /></label>
+                    </form>
+                    <button onclick="ingresar(this)">ingresar</button>
+                    <label><a href="#" onclick="mostrarRecuperar()">¿Ha olvidado su contraseña?</a></label>
+                </div>
+                <div id="signed"  class="ocultar">
+                    <span class="icon-user" id="iconUser"></span>
+                    <img class="ocultar" id="fotoUsuario" />
+                    <br /><br />
+                    <label id="lblNom_usuario">Nombre de Usuario</label>
+                    <label><a href="#" onclick="llamaPagina('pefil');">Ver mi Perfil</a></label>
+                    <button onclick="session.cerrar();">Salir</button>
+                </div>
+                <div id="olvido" class="ocultar">
+                    <form id="frmolvido">
+                        <label>Recuperar contraseña</label>
+                        <label><span class="icon-mail3"></span><input name="email" type="email" placeholder="Email"/></label>
+                    </form>
+                    <button onclick="recuperar(this)">enviar</button>
+                </div>
+            </div>
+           <a href="#" onclick="llamaPagina('registro')"><img class="accesocv" src="Recursos/images/bg-accesocv.jpg" /></a>
+        </div>
+        <div id="AuxiFrame">
+            <iframe id="frmDirecciones" src=""></iframe>
+        </div>
+        <footer>
+            <div>
+                <a href="#">Política de privacidad</a> | 
+                <a href="#">Mapa del sitio</a> | 
+                <a href="#">Aviso de Privacidad</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

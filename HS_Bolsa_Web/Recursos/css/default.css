@@ -1,0 +1,9 @@
+﻿.Main{overflow: auto;height:550px;}
+article{width:50%;}
+section{margin-top:90px;}
+aside{width:45%;float:right;margin-top:50px;}
+aside #accordion h3{font-family: 'Cocon' !important;font-size:14px;}
+aside #accordion{font-family: 'CoconLight' !important;font-size:14px;}
+.slides{margin:auto;}
+.margen{width:85%;margin:auto;margin-top:50px;border-radius:3px; box-shadow:6px 6px 8px rgba(0,0,0,0.25)}
+#banner .active{margin-top:-20px;padding:0px;}

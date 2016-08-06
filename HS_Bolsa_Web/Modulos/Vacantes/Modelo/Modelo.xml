@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Secciones>
+  <filtros>
+    <obtenerMedios>
+      <sql>
+        <![CDATA[
+          SELECT cve_Medio AS 'Clave', Detalle AS 'detalle' FROM CAT_Medios where activo = 1
+        ]]>
+      </sql>
+    </obtenerMedios>
+  </filtros>
+  <Vacantes>
+    <mostrarVacantes>
+      <campo leyenda="Criterio" db_nombre="criterio" form_nombre="criterio"  requerido="false"  charsize="200" tipo="string"  default=""/>
+      <sql>
+        <![CDATA[
+          SET LANGUAGE ESPAÑOL;
+          SELECT 
+          cve_solicitudvacante
+          ,NombreVacante
+          ,CONVERT(char(3),DATENAME(MONTH,fechaSolicitud)) + ' ' + CONVERT(char(10),DATENAME(YEAR,fechaSolicitud)) as 'fechaSolicitud'
+          ,ISNULL(salario,0) as 'salario'
+          ,ISNULL(nombreestado,'') as 'nombreestado'
+          ,ISNULL(nombreciudad,'') as 'nombreciudad'
+          ,detalle
+          FROM CON_SolicitudVacante
+          WHERE
+          NombreVacante like '%'+@criterio+'%' OR
+          convert (nchar,salario) like '%'+@criterio+'%' OR
+          horario like '%'+@criterio+'%' OR
+          nombreestado like '%'+@criterio+'%' OR
+          nombreciudad like '%'+@criterio+'%' OR
+          detalle like '%'+@criterio+'%'
+          AND cve_estatus=2
+          SET LANGUAGE us_english;
+        ]]>
+      </sql>
+    </mostrarVacantes>
+  </Vacantes>
+  <Vacante>
+    <mostrarVacante>
+      <campo leyenda="Vacante" db_nombre="vacanteId" form_nombre="vacanteId" requerido="true" charsize="10" tipo="int" default=""/>
+      <sql>
+        <![CDATA[
+        SET LANGUAGE ESPAÑOL;
+        SELECT 
+        cve_solicitudvacante
+        ,NombreVacante
+        ,CONVERT(char(3),DATENAME(MONTH,fechaSolicitud)) + ' ' + CONVERT(char(10),DATENAME(YEAR,fechaSolicitud)) as 'fechaSolicitud'
+        ,ISNULL(salario,0) as 'salario'
+        ,ISNULL(horario,'') as 'horario'
+        ,ISNULL(nombreestado,'') as 'nombreestado'
+        ,ISNULL(nombreciudad,'') as 'nombreciudad'
+        ,detalle
+        ,HTML
+        FROM CON_SolicitudVacante
+        WHERE
+        cve_solicitudvacante=@vacanteId
+        AND cve_estatus=2
+        SET LANGUAGE us_english;
+        ]]>
+      </sql>
+    </mostrarVacante>
+    <aplicar>
+      <sql>
+        <![CDATA[
+          IF NOT EXISTS (SELECT * FROM CAN_SolicitudCandidato WHERE RFC = @RFC AND cve_estatus NOT IN(6,7) ) BEGIN
+	          SELECT 1 estatus, 'Puede aplicar' mensaje;
+          END
+          ELSE BEGIN
+	          SELECT -1 estatus, 'Ya está aplicando a otra bacante. Puede verlo en su perfil' mensaje;
+          END
+        ]]>
+      </sql>
+    </aplicar>
+    <aplicarAVacante>
+      <campo leyenda="Pretensiones" db_nombre="pretensiones" form_nombre="pretensiones" requerido="true" charsize="50" tipo="string"/>
+      <campo leyenda="Fecha de ingreso" db_nombre="fecha" form_nombre="fecha" requerido="true" charsize="15" tipo="string" />
+      <campo leyenda="Pariente" db_nombre="pariente" form_nombre="familiares" requerido="true" charsize="10" tipo="bool"/>
+      <campo leyenda="Medio " db_nombre="medio" form_nombre="medio" requerido="true" charsize="10" tipo="int"/>
+      <campo leyenda="Puede viajar" db_nombre="viajar" form_nombre="viajar" requerido="false" charsize="10" tipo="bool" default="false"/>
+      <campo leyenda="cambiar de residencia" db_nombre="residencia" form_nombre="residencia" requerido="false" charsize="10" tipo="bool" default="false"/>
+      <sql>
+        <![CDATA[
+          SET NOCOUNT ON;
+          BEGIN TRY
+           SET LANGUAGE ESPAÑOL;
+           INSERT INTO CAN_SolicitudCandidato(
+            RFC
+            ,cve_solicitudvacante
+            ,cve_solicitudcandidato
+            ,fechaSolicitud
+            ,cve_estatus
+            ,cve_MedioIngreso
+            ,EsRecurrente
+            ,Pretensiones
+            ,Merecimientos
+            ,OtrasHabilidades
+            ,vigencia)
+            VALUES(
+             @RFC
+            ,@vacanteId
+            ,(SELECT ISNULL(MAX(cve_solicitudcandidato),0)+1 FROM CAN_SolicitudCandidato WHERE RFC=@RFC)
+            ,GETDATE()
+            ,1
+            ,@medio
+            ,NULL
+            ,CONVERT(money,@pretensiones)
+            ,NULL
+            ,NULL
+            ,DATEADD(DAY,90,GETDATE()))
+            SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+          END TRY
+          BEGIN CATCH
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+          END CATCH
+           SET LANGUAGE us_english;
+        ]]>
+      </sql>
+    </aplicarAVacante>
+  </Vacante>
+</Secciones>

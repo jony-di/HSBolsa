@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head title="">
+    <!-- CSS -->
+    <link href="../../../Recursos/css/tema.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Recursos/jqueryui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Recursos/css/FlipSwitch.css" rel="stylesheet" type="text/css" />
+    <link href="css/formulario.css" rel="stylesheet" type="text/css" />
+    <link href="css/Registro.css" rel="stylesheet" type="text/css" />
+    <!-- Scripts -->
+    <script src="../../../Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/jquery.bpopup.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/Global.js" type="text/javascript"></script>
+    <script src="js/formulario.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/Registro.js"></script>
+    <!-- Other scripts -->
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+    <div class="pasos">
+        <hr />
+        <div class="paso actual">
+            1</div>
+        <div class="paso">
+            2</div>
+        <div class="paso">
+            3</div>
+        <div class="paso">
+            4</div>
+        <div class="paso">
+            5</div>
+    </div>
+    <div class="formulario">
+        <fieldset id="generales" class="mostrar">
+            <legend>Datos Personales</legend>
+            <form id="frmGenerales">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="APaterno" />
+                    <label for="APaterno">
+                        Apellido Paterno</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="AMaterno" />
+                    <label for="AMaterno">
+                        Apellido Materno</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="nombre" />
+                    <label for="nombre">
+                        Nombres</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="fechaNacimiento" readonly="true" />
+                    <label for="fechaNacimiento">Fecha de nacimiento</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="sexo" name="sexo">
+                        <option value="" selected="selected"></option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Femenino</option>
+                    </select>
+                    <label for="sexo">Sexo</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="nacionalidad" name="nacionalidad">
+                        <option value="" selected="selected"></option>
+                    </select>
+                    <label for="nacionalidad">Nacionalidad</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="lugarNacimiento" />
+                    <label for="lugarNacimiento">
+                        Lugar de nacimiento</label>
+                </div>
+            </div>
+            </form>
+            <button onclick="gardarDatosP();" style="float: right;">
+                Siguiente >></button>
+        </fieldset>
+        <fieldset id="Documentacion" class="ocultar">
+            <legend>Documentos oficiales</legend>
+            <form id="frmDocumentos">
+            <div class="row">
+                <div class="input-field col s6">
+                    <select id="Select3" name="nacionalidad">
+                        <option value="" selected="selected"></option>
+                    </select>
+                    <label for="nacionalidad">
+                        Estado Civil</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="Text2" />
+                    <label for="AMaterno">
+                        Cedula profecional</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="NSS" name="NSS" />
+                    <label for="NSS">
+                        Numero del Seguro Social</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="CURP" name="CURP" />
+                    <label for="CURP">
+                        CURP</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="cartilla" name="cartilla" />
+                    <label for="cartilla">
+                        Cartilla Militar</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="fechaLiberacion" name="fechaLiberacion" readonly="true" />
+                    <label for="fechaLiberacion">
+                        Fecha de liberacion de Cartilla</label>
+                </div>
+            </div>
+            </form>
+            <button style="float: right;" onclick="gardarDocumentos();">
+                Siguiente >></button>
+        </fieldset>
+        <fieldset id="Escolaridad" class="ocultar">
+            <legend>Escolaridad</legend>
+            <div class="input-field col s6">
+                <input type="text" id="titulo" name="titulo" />
+                <label for="cartilla">
+                    Profesion</label>
+            </div>
+            <h3>Escuelas<span class="icon-plus" id="addSchool"></span></h3>
+            <div class="escuelas">
+                <table id="tbescuelas" class="TablaAzul">
+                    <thead>
+                        <tr>
+                            <th>
+                                Opciones
+                            </th>
+                            <th>
+                                Grado
+                            </th>
+                            <th>
+                                Escuela
+                            </th>
+                            <th>
+                                Titulado
+                            </th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba2</td>
+                        <td>2015</td>
+                        <td>Prueba2</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba3</td>
+                        <td>2015</td>
+                        <td>Prueba3</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button style="float: right;" onclick="guadarEscolaridad();">
+                Siguiente >></button>
+        </fieldset>
+        <fieldset id="Infmedica" class="ocultar">
+            <legend>Informacion Medica</legend>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="sangre" name="sangre" maxlength="2" size="4" />
+                    <label for="sangre">
+                        Tipo de sangre</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="peso" name="peso" maxlength="2" size="4" />
+                    <label for="peso">
+                        Peso</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="altura" name="altura" maxlength="4" />
+                    <label for="altura">
+                        Estatura</label>
+                </div>
+                <div class="input-field col s6" style="margin: -15px 0px !important; padding: 0px 20px !important;">
+                    <h4>
+                        Fumas</h4>
+                    <div class="onoffswitch" style="position: relative; top: -55px; left: 50px;">
+                        <input type="checkbox" name="fumas" class="onoffswitch-checkbox" id="fumas">
+                        <label class="onoffswitch-label" for="fumas">
+                            <span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                    <h4>
+                        Tomas</h4>
+                    <div class="onoffswitch" style="position: relative; top: -55px; left: 50px;">
+                        <input type="checkbox" name="tomas" class="onoffswitch-checkbox" id="tomas">
+                        <label class="onoffswitch-label" for="tomas">
+                            <span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <br style="clear: both" />
+            <h3>Enfermedades<span class="icon-plus" id="addEnfermedad"></span></h3>
+            <div class="enfermedades">
+                <table id="tbEnfermedades" class="TablaAzul">
+                    <thead>
+                        <tr>
+                            <th>
+                                Opciones
+                            </th>
+                            <th>
+                                Enfermedad
+                            </th>
+                            <th>
+                                Desde
+                            </th>
+                            <th>
+                                Tratamiento
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba2</td>
+                        <td>2015</td>
+                        <td>Prueba2</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba3</td>
+                        <td>2015</td>
+                        <td>Prueba3</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Prueba</td>
+                        <td>2015</td>
+                        <td>Prueba</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button style="float: right;">
+                Siguiente >></button>
+        </fieldset>
+    </div>
+    <div id="agregarEnfermedad" class="ocultar">
+        <form id="frmEnfermedad">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="text" id="Text1" name="titulo" />
+                    <label for="cartilla">
+                        Enfermedad</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="fechaEnfermedad" name="fechaEnfermedad" />
+                    <label for="fechaIni">
+                        Desde</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="Text7" name="titulo" />
+                    <label for="cartilla">
+                        Tratamiento</label>
+                </div>
+            </div>
+        </form>
+        <button onclick="agregarEnfermedad();" style="position: relative; top: 50px; left: 200px;">
+            Agregar >></button>
+    </div>
+    <div id="agregarEscuela" class="ocultar">
+        <form id="frmEscuelas">
+            <div class="row">
+                <div class="input-field col s6">
+                    <select>
+                        <option></option>
+                    </select>
+                    <label for="cartilla">
+                        Grado academico</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="Text3" name="titulo" />
+                    <label for="cartilla">
+                        Instituto</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="fechaIni" name="fechaIni" />
+                    <label for="fechaIni">
+                        Fecha de inicio</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="fechaFin" name="fechaFin" />
+                    <label for="fechaFin">
+                        Fecha de termino</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="text" id="Text6" name="titulo" />
+                    <label for="cartilla">
+                        Titulo recibido</label>
+                </div>
+            </div>
+        </form>
+        <button onclick="agregarEscuela();" style="position: relative; top: 50px; left: 200px;">
+            Agregar >></button>
+    </div>
+</body>
+</html>

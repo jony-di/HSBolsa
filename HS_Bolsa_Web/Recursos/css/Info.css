@@ -1,0 +1,27 @@
+﻿.Info
+{
+    width: 80%;
+    margin: auto;
+    padding: 0px;
+}
+
+.label
+{
+    float: left;
+    margin: 10px 0px 0px 20px;
+    display: block;
+    line-height: 1.2;
+    margin-right: 10px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    width: 500px;
+}
+
+[class^="icon-"], [class*=" icon-"]
+{
+    color: #B9DD00;
+    font-size: 36px;
+    float: left;
+    clear: left;
+}

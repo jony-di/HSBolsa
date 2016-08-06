@@ -1,0 +1,119 @@
+﻿body
+{
+    overflow: auto;
+}
+
+.Recuadro
+{
+    border: solid 1px #E2E2E2;
+    height: 350px;
+    padding: 20px;
+    width: 80%;
+    height: 300px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.BotonLink
+{
+    border: solid 2px #D5D5D5;
+    color: #80807B;
+    cursor: pointer;
+    padding: 0px 10px;
+}
+
+.Recuadro-Interno
+{
+    border: solid 2px #E2E2E2;
+    height: 75%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.Titulo
+{
+    background-color: #EEF3FA;
+    color: #80807B;
+    padding: 10px;
+    margin: 0;
+    position: relative;
+    top: -20px;
+}
+
+a:link
+{
+ text-decoration:none;
+}
+.Marco
+{
+    border: dashed 3px #8F56A4;
+    position: relative;
+    height: 150px;
+    width: 100px;
+    float: left;
+    margin: 10px -50px 0px 10px;
+}
+
+.foto
+{
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.Experiencia
+{
+    color: #80807B;
+    font-size: 15px;
+    top: -10px;
+    left: 10px;
+    position: relative;
+}
+.Tabla
+{
+    width: 50%;
+    margin: auto;
+    text-align: left;
+}
+.Tabla th
+{
+    color: #5D96CF;
+    text-align: left;
+}
+.Tabla td
+{
+    text-align: left;
+}
+
+.Lateral
+{
+    top: 90px;
+    margin: 0px 5px;
+    cursor: pointer !important;
+    color: #AAA !important;
+    background-color: #454545;
+    z-index: 1;
+    width: 32px;
+    position:relative;
+    padding: 0px;
+    height: 77px;
+}
+
+.Fecha
+{
+    background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAXBAMAAADJv2OxAAAAMFBMVEX///+ZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZnHHh8xAAAAD3RSTlMAESIzRFVmd4iZqrvM3e5GKvWZAAAAdElEQVQI12NgAAH2v2CKsf83mJb8vxBEMe3/KQCitf83gLn3n4Flff8FgCjW90/A3Pw/BiBK4v0lMHf+bwUw/R/CZVj/SwBq5kaIQD1UAfv7yxCBuH8OYJrl/VWIgM3/AjDNdP45REDq/0SI+9b/gghw/AUAn68l+4HFkZUAAAAASUVORK5CYII=") no-repeat scroll center center;
+    bottom: 0px;
+    height: 23px;
+    left: 0px;
+    margin: auto;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 14px;
+}

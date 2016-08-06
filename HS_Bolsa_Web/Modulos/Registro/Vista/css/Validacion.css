@@ -1,0 +1,29 @@
+﻿body{color:#4F6F19;}
+.icon-checkmark{
+    color:#fff;
+    background-color:#B9DD00;
+    padding:10px;
+    border-radius:50px;
+}
+.icon-arrow-right{color:#fff;
+    background-color:#00B5CC;
+    padding:10px;
+    border-radius:50px;
+    float:right;
+    }
+.icon-cross{
+    color:#fff;
+    background-color:#EC080D;
+    padding:10px;
+    border-radius:50px;
+}
+.icon-warning{
+    color:#fff;
+    background-color:#FFE666;
+    padding:10px;
+    border-radius:50px;
+}
+p
+{
+    text-align:center;
+    }

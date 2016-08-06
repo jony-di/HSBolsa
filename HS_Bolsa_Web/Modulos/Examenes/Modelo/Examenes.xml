@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<Secciones>
+  <Examen>    
+    <GuardarRespuestasCandidato>
+      <campo leyenda="respuestas" db_nombre="respuestas" form_nombre="respuestas"  requerido="false" charsize="1024" tipo="string"  default=""/>
+      <sql>
+        <![CDATA[
+          SELECT EXA_examen.* FROM EXA_examen INNER JOIN EXA_paqexamendet ON EXA_examen.cve_examen=EXA_paqexamendet.cve_examen AND EXA_paqexamendet.cve_paqexamen=1 --INNER JOIN CON_SolicitudVacante ON EXA_paqexamendet.cve_paqexamen=CON_SolicitudVacante.cve_paqexamen WHERE CON_SolicitudVacante.puesto=1;
+        ]]>
+      </sql>
+    </GuardarRespuestasCandidato>
+    
+    <ObtenerExamenesPuesto>
+      <campo leyenda="Clave" db_nombre="cve_puesto" form_nombre="cve_puesto" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+          SELECT EXA_examen.* FROM EXA_examen INNER JOIN EXA_paqexamendet ON EXA_examen.cve_examen=EXA_paqexamendet.cve_examen AND EXA_paqexamendet.cve_paqexamen=1 --INNER JOIN CON_SolicitudVacante ON EXA_paqexamendet.cve_paqexamen=CON_SolicitudVacante.cve_paqexamen WHERE CON_SolicitudVacante.puesto=1;
+        ]]>
+      </sql>
+    </ObtenerExamenesPuesto>
+
+    <ObtenerDetalleExamen>
+      <campo leyenda="Clave" db_nombre="cve_examen" form_nombre="cve_examen"  requerido="false"  charsize="0" tipo="int"  default=""/>
+      <sql>
+        <![CDATA[
+          SELECT cve_examen,nombre,cantidad,objetivo,tiemporespuesta,aleatorio,puntaje FROM EXA_examen WHERE cve_examen=@cve_examen;
+        ]]>
+      </sql>
+    </ObtenerDetalleExamen>
+
+    <ObtenerCatalogo>
+      <campo leyenda="Página" db_nombre="pagina" form_nombre="pagina" requerido="true" charsize="0" tipo="int" default=""/>
+      <campo leyenda="Longitud de página" db_nombre="longitudPagina" form_nombre="longitudPagina"  requerido="true" charsize="0" tipo="int" default=""/>
+      <campo leyenda="Criterio" db_nombre="criterio" form_nombre="criterio"  requerido="false"  charsize="200" tipo="string"  default=""/>
+      <campo leyenda="Clave" db_nombre="cve_examen" form_nombre="cve_examen"  requerido="false"  charsize="0" tipo="int"  default=""/>
+      <sql>
+        <![CDATA[
+        SET NOCOUNT ON;
+        DECLARE @inicio INT;
+        SET @inicio= (@pagina-1)*@longitudPagina;--Pagina debe ser mayor que 0;
+        DECLARE @TablaAuxiliarPaginacion AS TABLE(
+          indiceRegistro INT,
+          [cve_examen] [int],
+	        [nombre] [nvarchar](255),
+	        [cantidad] [smallint],
+	        [objetivo] [nvarchar](512),
+	        [tiemporespuesta] [smallint],
+	        [aleatorio] [bit],
+	        [puntaje] [smallint]
+        )
+
+        INSERT INTO @TablaAuxiliarPaginacion
+        SELECT
+        ROW_NUMBER() OVER(ORDER BY CONVERT(INT,cve_examen ) DESC) AS indiceRegistro,
+          cve_examen,nombre,cantidad,objetivo,tiemporespuesta,aleatorio,puntaje
+        FROM
+        EXA_examen
+        WHERE  ( ((CONVERT(VARCHAR(20),cve_examen) like '%' + @criterio + '%') OR (nombre like '%' + @criterio + '%')) AND @cve_examen=0)
+        OR ((cve_examen=@cve_examen) AND (@cve_examen != 0));
+          
+        --Paginacion
+        SELECT TOP(@longitudPagina)
+          indiceRegistro,
+          @@ROWCOUNT as totalRegistros,
+          a.cve_examen,a.nombre,a.cantidad,a.objetivo,a.tiemporespuesta,a.aleatorio,a.puntaje
+        FROM @TablaAuxiliarPaginacion a
+        WHERE indiceRegistro > @inicio
+        ORDER BY indiceRegistro ASC
+        ]]>
+      </sql>
+    </ObtenerCatalogo>
+    <Editar>
+      <campo leyenda="Clave" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Nombre" db_nombre="nombre" form_nombre="nombre" requerido="true" charsize="200" tipo="string"/>
+      <campo leyenda="Cantidad" db_nombre="cantidad" form_nombre="cantidad" requerido="true" charsize="0" tipo="int" default="0"/>
+      <campo leyenda="Objetivo" db_nombre="objetivo" form_nombre="objetivo" requerido="true" charsize="1024" tipo="string" default=""/>
+      <campo leyenda="Tiempo de respuesta" db_nombre="tiemporespuesta" form_nombre="tiemporespuesta" requerido="false" charsize="0" tipo="int"/>
+      <campo leyenda="Ordernar aleatorio" db_nombre="aleatorio" form_nombre="aleatorio" requerido="false" charsize="0" tipo="bool" default="false"/>
+      <campo leyenda="Puntaje" db_nombre="puntaje" form_nombre="puntaje"  requerido="true" charsize="50" tipo="string"/>
+      <sql>
+        <![CDATA[
+            SET NOCOUNT ON;
+            BEGIN TRY
+              UPDATE EXA_examen
+              SET
+              cve_examen=@cve_examen
+              ,nombre=@nombre
+              ,cantidad=@cantidad
+              ,objetivo=@objetivo
+              ,tiemporespuesta=@tiemporespuesta
+              ,aleatorio=@aleatorio
+              ,puntaje=@puntaje
+              WHERE cve_examen= @cve_examen
+              SELECT 1  estatus, 'Registro actualizado correctamente' mensaje;
+            END TRY BEGIN CATCH
+              SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+            END CATCH
+        ]]>
+      </sql>
+    </Editar>
+    <placebo>
+      <sql>
+        <![CDATA[
+          SELECT * FROM @respuestasCandidato;
+        ]]>
+      </sql>
+    </placebo>
+  </Examen>
+
+  <Preguntas>
+    <ObtenerCatalogoTiposPregunta>
+      <sql>
+        <![CDATA[
+          SELECT cve_tipopregunta,descripcion FROM EXA_tipopregunta;
+        ]]>
+      </sql>
+    </ObtenerCatalogoTiposPregunta>
+
+    <ClaveSiguientePregunta>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+            SELECT ISNULL((SELECT MAX(cve_pregunta) FROM EXA_pregunta WHERE cve_examen=@cve_examen),0) + 1 cve_pregunta;
+          ]]>
+      </sql>
+    </ClaveSiguientePregunta>
+
+    <Nuevo>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave tipo de pregunta" db_nombre="cve_tipopregunta" form_nombre="cve_tipopregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave tipo de respuesta" db_nombre="cve_tiporespuesta" form_nombre="cve_tiporespuesta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Descripción" db_nombre="descripcion" form_nombre="descripcion" requerido="true" charsize="1024" tipo="string"/>
+      <campo leyenda="Secuencia" db_nombre="secuencia" form_nombre="secuencia" requerido="true" charsize="0" tipo="int" default="0"/>
+      <campo leyenda="Puntaje" db_nombre="puntaje" form_nombre="puntaje_pregunta"  requerido="true" charsize="50" tipo="string"/>
+      <sql>
+        <![CDATA[
+              SET NOCOUNT ON;
+              BEGIN TRY
+                  UPDATE P SET P.secuencia=A.secuencia FROM EXA_pregunta P INNER JOIN
+                  (SELECT cve_examen,cve_pregunta,ROW_NUMBER() OVER(PARTITION BY cve_examen ORDER BY cve_examen, cve_pregunta) + @secuencia secuencia FROM EXA_pregunta WHERE secuencia > (@secuencia-1)) A ON P.cve_examen=A.cve_examen AND P.cve_pregunta=A.cve_pregunta WHERE P.cve_examen=@cve_examen;
+                  INSERT INTO EXA_pregunta(cve_examen,cve_pregunta,cve_tipopregunta,cve_tiporespuesta,descripcion,secuencia,puntaje)
+                  VALUES(@cve_examen,@cve_pregunta,@cve_tipopregunta,@cve_tiporespuesta,@descripcion,@secuencia,@puntaje);
+                  SELECT 1  estatus, 'Registro guardado correctamente' mensaje, @cve_examen cve_examen, @cve_pregunta cve_pregunta
+              END TRY BEGIN CATCH
+                  SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+              END CATCH
+            ]]>
+      </sql>
+    </Nuevo>
+
+    <Editar>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave tipo de pregunta" db_nombre="cve_tipopregunta" form_nombre="cve_tipopregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave tipo de respuesta" db_nombre="cve_tiporespuesta" form_nombre="cve_tiporespuesta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Descripción" db_nombre="descripcion" form_nombre="descripcion" requerido="true" charsize="1024" tipo="string"/>
+      <campo leyenda="Secuencia" db_nombre="secuencia" form_nombre="secuencia" requerido="true" charsize="0" tipo="int" default="0"/>
+      <campo leyenda="Puntaje" db_nombre="puntaje" form_nombre="puntaje_pregunta"  requerido="true" charsize="50" tipo="string"/>
+      <sql>
+        <![CDATA[
+                  SET NOCOUNT ON;
+                  BEGIN TRY
+                    UPDATE EXA_pregunta
+                    SET
+                    cve_examen=@cve_examen
+                    ,cve_pregunta=@cve_pregunta
+                    ,cve_tipopregunta=@cve_tipopregunta
+                    ,cve_tiporespuesta=@cve_tiporespuesta
+                    ,descripcion=@descripcion
+                    ,secuencia=@secuencia
+                    ,puntaje=@puntaje
+                    WHERE cve_examen= @cve_examen AND cve_pregunta=@cve_pregunta
+                    SELECT 1  estatus, 'Registro actualizado correctamente' mensaje, @cve_examen cve_examen, @cve_pregunta cve_pregunta;
+                  END TRY BEGIN CATCH
+                    SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+                  END CATCH
+              ]]>
+      </sql>
+    </Editar>
+    <DetallePregunta>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+              SET NOCOUNT ON;
+              BEGIN TRY
+                  SELECT cve_examen,cve_pregunta,EXA_pregunta.cve_tiporespuesta,A.descripcion stipopregunta, B.descripcion stiporespuesta,EXA_pregunta.descripcion,secuencia,puntaje 
+                  FROM EXA_pregunta
+                    INNER JOIN EXA_tipopregunta A ON A.cve_tipopregunta=EXA_pregunta.cve_tipopregunta
+                    INNER JOIN EXA_tiporespuesta B ON B.cve_tiporespuesta=EXA_pregunta.cve_tiporespuesta
+                  WHERE cve_examen= @cve_examen AND cve_pregunta=@cve_pregunta;
+              END TRY BEGIN CATCH
+                  SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+              END CATCH
+            ]]>
+      </sql>
+    </DetallePregunta>
+    <EliminarPregunta>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Secuencia" db_nombre="secuencia" form_nombre="secuencia" requerido="true" charsize="0" tipo="int" default="0"/>
+      <sql>
+        <![CDATA[
+              SET NOCOUNT ON;
+              BEGIN TRY
+                  DELETE FROM EXA_pregunta
+                  WHERE cve_examen= @cve_examen AND cve_pregunta=@cve_pregunta;
+                  UPDATE P SET P.secuencia=A.secuencia FROM EXA_pregunta P INNER JOIN
+                  (SELECT cve_examen,cve_pregunta,ROW_NUMBER() OVER(PARTITION BY cve_examen ORDER BY cve_examen, cve_pregunta) + (@secuencia-1) secuencia FROM EXA_pregunta WHERE secuencia > (@secuencia-1)) A ON P.cve_examen=A.cve_examen AND P.cve_pregunta=A.cve_pregunta WHERE P.cve_examen=@cve_examen;
+                  SELECT 1 AS estatus,  'Pregunta eliminada correctamente.' mensaje;
+              END TRY BEGIN CATCH
+                  SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+              END CATCH
+            ]]>
+      </sql>
+    </EliminarPregunta>
+
+    <ObtenerPreguntas>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+                SET NOCOUNT ON;
+                BEGIN TRY
+                    SELECT cve_examen,cve_pregunta,EXA_pregunta.cve_tiporespuesta,A.descripcion stipopregunta,B.descripcion stiporespuesta,EXA_pregunta.descripcion,secuencia,puntaje 
+                    FROM EXA_pregunta
+                      INNER JOIN EXA_tiporespuesta A ON A.cve_tiporespuesta=EXA_pregunta.cve_tiporespuesta
+                      INNER JOIN EXA_tiporespuesta B ON B.cve_tiporespuesta=EXA_pregunta.cve_tiporespuesta
+                    WHERE cve_examen= @cve_examen
+                    ORDER BY secuencia ASC;
+                END TRY BEGIN CATCH
+                    SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+                END CATCH
+              ]]>
+      </sql>
+    </ObtenerPreguntas>
+
+  </Preguntas>
+  <Respuestas>
+    <ObtenerCatalogoTiposRespuesta>
+      <sql>
+        <![CDATA[
+          SELECT * FROM EXA_tiporespuesta;
+        ]]>
+      </sql>
+    </ObtenerCatalogoTiposRespuesta>
+
+    <ClaveSiguienteRespuesta>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+            SELECT ISNULL((SELECT MAX(cve_respuesta) FROM EXA_respuestas WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta),0) + 1 cve_respuesta;
+          ]]>
+      </sql>
+    </ClaveSiguienteRespuesta>
+
+    <ObtenerClaveSiguienteGrupo>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+            SELECT ISNULL((SELECT MAX(cve_grupo) FROM EXA_Pregunta_Grupo_Respuesta WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta),0) + 1 cve_grupo;
+          ]]>
+      </sql>
+    </ObtenerClaveSiguienteGrupo>
+
+    <Nuevo>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de grupo" db_nombre="cve_grupo" form_nombre="cve_grupo" requerido="false" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de respuesta" db_nombre="cve_respuesta" form_nombre="cve_respuesta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Descripción" db_nombre="descripcion" form_nombre="descripcion" requerido="true" charsize="1024" tipo="string"/>
+      <campo leyenda="Descripción par" db_nombre="descripcionpar" form_nombre="descripcionpar" requerido="false" charsize="1024" tipo="string"/>
+      <campo leyenda="Es correcto" db_nombre="correcto" form_nombre="correcto" requerido="false" charsize="1024" tipo="bool"/>
+      <sql>
+        <![CDATA[
+              SET NOCOUNT ON;
+              BEGIN TRY
+                  IF @cve_grupo IS NOT NULL BEGIN
+                    INSERT INTO EXA_Pregunta_Grupo_Respuesta(cve_examen,cve_pregunta,cve_grupo,cve_respuesta)
+                    VALUES(@cve_examen,@cve_pregunta,@cve_grupo,@cve_respuesta);
+                  END
+                  INSERT INTO EXA_respuestas(cve_examen,cve_pregunta,cve_respuesta,descripcion,descripcionpar,correcto)
+                  VALUES(@cve_examen,@cve_pregunta,@cve_respuesta,@descripcion,@descripcionpar,@correcto);                  
+                  SELECT 1  estatus, 'Registro guardado correctamente' mensaje, @cve_examen cve_examen, @cve_pregunta cve_pregunta,@cve_respuesta cve_respuesta
+              END TRY BEGIN CATCH
+                  SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+              END CATCH
+            ]]>
+      </sql>
+    </Nuevo>
+
+    <Editar>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de respuesta" db_nombre="cve_respuesta" form_nombre="cve_respuesta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Descripción" db_nombre="descripcion" form_nombre="descripcion" requerido="true" charsize="1024" tipo="string"/>
+      <campo leyenda="Descripción par" db_nombre="descripcionpar" form_nombre="descripcionpar" requerido="false" charsize="1024" tipo="string"/>
+      <campo leyenda="Es correcto" db_nombre="correcto" form_nombre="correcto" requerido="false" charsize="1024" tipo="bool"/>
+      <sql>
+        <![CDATA[
+                  SET NOCOUNT ON;
+                  BEGIN TRY
+                    UPDATE EXA_respuestas
+                    SET
+                    cve_examen=@cve_examen
+                    ,cve_pregunta=@cve_pregunta
+                    ,cve_respuesta=@cve_respuesta
+                    ,descripcion=@descripcion
+                    ,descripcionpar=@descripcionpar
+                    ,correcto=@correcto
+                    WHERE cve_examen= @cve_examen AND cve_pregunta=@cve_pregunta AND cve_pregunta=@cve_pregunta AND cve_respuesta=@cve_respuesta
+                    SELECT 1  estatus, 'Registro actualizado correctamente' mensaje, @cve_examen cve_examen, @cve_pregunta cve_pregunta,@cve_respuesta cve_respuesta;
+                  END TRY BEGIN CATCH
+                    SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+                  END CATCH
+              ]]>
+      </sql>
+    </Editar>
+
+    <ObtenerRespuestas>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+                SET NOCOUNT ON;
+                BEGIN TRY
+                    SELECT A.*,ISNULL(B.cve_grupo,0) cve_grupo FROM EXA_respuestas A LEFT OUTER JOIN EXA_Pregunta_Grupo_Respuesta B ON A.cve_examen=B.cve_examen AND A.cve_pregunta=B.cve_pregunta AND A.cve_examen=@cve_examen AND A.cve_respuesta=B.cve_respuesta WHERE A.cve_examen=@cve_examen;
+                END TRY BEGIN CATCH
+                    SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+                END CATCH
+              ]]>
+      </sql>
+    </ObtenerRespuestas>
+
+    <ObtenerAgrupaciones>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+          SELECT P.cve_examen, P.cve_pregunta, ISNULL(A.cve_grupo,0)cve_grupo
+          FROM EXA_pregunta P LEFT OUTER JOIN EXA_Pregunta_Grupo_Respuesta A ON P.cve_examen=@cve_examen AND P.cve_examen=A.cve_examen AND P.cve_pregunta=A.cve_pregunta 
+          WHERE P.cve_examen=@cve_examen
+          GROUP BY P.cve_examen, P.cve_pregunta,A.cve_grupo
+        ]]>
+      </sql>
+    </ObtenerAgrupaciones>
+
+    <ObtenerDetalleRespuesta>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de respuesta" db_nombre="cve_respuesta" form_nombre="cve_respuesta" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+              SELECT * FROM EXA_respuestas WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta AND cve_respuesta=@cve_respuesta;
+            ]]>
+      </sql>
+    </ObtenerDetalleRespuesta>
+
+    <EliminarRespuesta>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de grupo" db_nombre="cve_grupo" form_nombre="cve_grupo" requerido="false" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de respuesta" db_nombre="cve_respuesta" form_nombre="cve_respuesta" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+              SET NOCOUNT ON;
+              BEGIN TRY
+                  DELETE FROM EXA_Pregunta_Grupo_Respuesta WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta AND cve_grupo=@cve_grupo AND cve_respuesta=@cve_respuesta;
+                  DELETE FROM EXA_respuestas WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta AND cve_respuesta=@cve_respuesta;
+                  SELECT 1 AS estatus,  'Respuesta eliminada correctamente.' mensaje;
+              END TRY BEGIN CATCH
+                  SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+              END CATCH
+            ]]>
+      </sql>
+    </EliminarRespuesta>
+
+  </Respuestas>
+
+  <Columnas>
+    <ClaveSiguiente>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+            SELECT ISNULL((SELECT MAX(cve_etiqueta) FROM EXA_colrespuesta WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta),0) + 1 cve_columna;
+          ]]>
+      </sql>
+    </ClaveSiguiente>
+
+    <Nuevo>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de columna" db_nombre="cve_etiqueta" form_nombre="cve_columna" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Descripción" db_nombre="etiqueta" form_nombre="descripcion" requerido="true" charsize="1024" tipo="string"/>
+      <sql>
+        <![CDATA[
+              SET NOCOUNT ON;
+              BEGIN TRY
+                  INSERT INTO EXA_colrespuesta(cve_examen,cve_pregunta,cve_etiqueta,etiqueta)
+                  VALUES(@cve_examen,@cve_pregunta,@cve_etiqueta,@etiqueta);
+                  SELECT 1  estatus, 'Registro guardado correctamente' mensaje, @cve_examen cve_examen, @cve_pregunta cve_pregunta,@cve_etiqueta cve_columna
+              END TRY BEGIN CATCH
+                  SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+              END CATCH
+            ]]>
+      </sql>
+    </Nuevo>
+
+    <ObtenerCatalogo>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+                SET NOCOUNT ON;
+                BEGIN TRY
+                    SELECT * FROM EXA_colrespuesta WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta;
+                END TRY BEGIN CATCH
+                    SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+                END CATCH
+              ]]>
+      </sql>
+    </ObtenerCatalogo>
+
+    <ObtenerColRespuestas>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+                SET NOCOUNT ON;
+                BEGIN TRY
+                    SELECT * FROM EXA_colrespuesta WHERE cve_examen=@cve_examen;
+                END TRY BEGIN CATCH
+                    SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+                END CATCH
+              ]]>
+      </sql>
+    </ObtenerColRespuestas>
+
+    <EliminarColumna>
+      <campo leyenda="Clave de exámen" db_nombre="cve_examen" form_nombre="cve_examen" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de pregunta" db_nombre="cve_pregunta" form_nombre="cve_pregunta" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Clave de columna" db_nombre="cve_etiqueta" form_nombre="cve_columna" requerido="true" charsize="0" tipo="int"/>
+      <sql>
+        <![CDATA[
+              SET NOCOUNT ON;
+              BEGIN TRY
+                  DELETE FROM EXA_colrespuesta WHERE cve_examen=@cve_examen AND cve_pregunta=@cve_pregunta AND cve_etiqueta=@cve_etiqueta;
+                  SELECT 1 AS estatus,  'Columna eliminada correctamente.' mensaje;
+              END TRY BEGIN CATCH
+                  SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+              END CATCH
+            ]]>
+      </sql>
+    </EliminarColumna>
+
+  </Columnas>
+</Secciones>

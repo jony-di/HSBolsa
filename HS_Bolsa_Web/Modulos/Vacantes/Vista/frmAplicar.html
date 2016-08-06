@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- CSS -->
+    <link href="../../../Recursos/css/tema.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Recursos/jqueryui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/frmAplicar.css" rel="stylesheet" type="text/css" />
+    <!-- Scripts -->
+    <script src="../../../Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/Global.js" type="text/javascript"></script>
+    <script src="js/frmAplicar.js" type="text/javascript"></script>
+    <!-- Other scripts -->
+    <script>
+    </script>
+</head>
+<body>
+    <div id="main">
+        <div class="formulario">
+            <fieldset id="generales" class="mostrar">
+                <legend>Cuestionario para aplicar a vacante</legend>
+                <form id="CuestionarioAplicar">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input type="text" id="pretensiones" name="pretensiones" onkeypress="return SoloNumeros(event);" onfocus="this.value = this.value !=='' ?  parseFloat(this.value.replace('$','').replace(new RegExp(',','g'),'')):''" onblur="this.value = '$ ' + parseFloat(this.value).formatMoney(2,',','.')"/>
+                        <label for="pretensiones">¿Cuáles son sus pretensiones económicas?</label>
+                    </div>
+                     <div class="input-field col s6">
+                        <input type="text" id="fecha" name="fecha" readonly="true" />
+                        <label for="fecha">Fecha en la que podría empezar a laborar</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="familiares" name="familiares" onchange="">
+                            <option value="false" selected="selected"></option>
+                            <option value="true" >Si</option>
+                            <option value="false" >No</option>
+                        </select>
+                        <label for="familiares">¿Algún pariente trabaja en esta empresa?</label>
+                    </div>
+                    <div class="input-field col s6">
+                         <select id="medio" name="medio" onchange="">
+                            <option value="" selected="selected"></option>
+                        </select>
+                        <label for="medio">¿Cómo se enteró de la vacante?</label>
+                    </div>
+                    <div class="input-field col s6">
+                         <select id="viajar" name="viajar">
+                            <option value="false" selected="selected"></option>
+                            <option value="true" >Si</option>
+                            <option value="false" >No</option>
+                        </select>
+                        <label for="viajar">¿Puede viajar?</label>
+                    </div>
+                    <div class="input-field col s6">
+                         <select id="residencia" name="residencia">
+                            <option value="false" selected="selected"></option>
+                            <option value="true" >Si</option>
+                            <option value="false" >No</option>
+                        </select>
+                        <label for="residencia">¿Está dispuesto a cambiar de residencia?</label>
+                    </div>
+                   
+                </div>
+                </form>
+                <button onclick="gardarCuestionario();" style="float: right;">
+                    Aplicar >></button>
+            </fieldset>
+        </div>
+    </div>
+</body>
+</html>

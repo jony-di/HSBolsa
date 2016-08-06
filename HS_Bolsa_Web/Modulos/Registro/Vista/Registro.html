@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- CSS -->
+    <link href="../../../Recursos/css/tema.css?ver=1" rel="stylesheet" type="text/css" />
+    <link href="css/Registro.css?ver=1" rel="stylesheet" type="text/css" />
+    <!-- Scripts -->
+    <script src="../../../Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/Global.js?ver=1" type="text/javascript"></script>
+    <script src="js/Registro.js?ver=1" type="text/javascript"></script>
+    <!-- Other scripts -->
+    <script>
+        (function ($, W, D) {
+            var JQUERY4U = {};
+            jQuery.validator.addMethod("RFC", function (value, element) {
+                // allow any non-whitespace characters as the host part
+                var re = new RegExp("^[A-Za-z]{4}\\d{6}(?:\\-[A-Za-z\\d]{3})?$");
+                return this.optional(element) || re.test(value);
+            }, 'Por favor, introduce un RFC válido.');
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //form validation rules
+                    $("#register-form").validate({
+                        rules: {
+                            aceptaPrivacidad: "required",
+                            terminosCondiciones: "required",
+                            nombre: {
+                                required: true,
+                                minlength: 10
+                            },
+                            ID_Documento: {
+                                required: true,
+                                RFC: true
+                            },
+                            email: {
+                                required: true,
+                                email: true
+                            },
+                            clave: {
+                                required: true,
+                                minlength: 5
+                            }
+                        },
+                        messages: {
+                            ID_Documento: "Ingrese su RFC",
+                            aceptaPrivacidad: "<span>*</span>",
+                            terminosCondiciones: "<span>*</span>",
+                            email: "Por favor, introduce una dirección de correo electrónico válida",
+                            clave: {
+                                required: "Por favor ingrese su contraseña",
+                                minlength: "Tu contraseña debe tener al menos 5 caracteres"
+                            },
+                            nombre: {
+                                required: "Por favor ingrese tu nombre",
+                                minlength: "Por favor ingrese al menos un apellido"
+                            }
+                        },
+                        submitHandler: function (form) {
+                            $("#enviar").hide();
+                            guardar();
+                        }
+                    });
+                }
+            }
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+        })(jQuery, window, document);
+    </script>
+</head>
+<head id="Head1" runat="server">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+</head>
+<body>
+    <div id="formulario">
+        <form id="register-form" autocomplete="off">
+        <div class="error_mass">
+        </div>
+        <div class="main">
+            <fieldset>
+                <legend>Registro Inicial</legend>
+                <hr />
+                <div class="row">
+                    <div class="input-field col s6">
+                            <input class="input-field" id="APaterno" name="APaterno" value="" size="30" maxlength="100"
+                                type="text" />
+                            <label class="input-field" for="APaterno">
+                                Apellido Paterno:
+                            </label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input class="input-field" id="AMaterno" name="AMaterno" value="" size="30" maxlength="100"
+                            type="text" />
+                        <label class="input-field" for="AMaterno">
+                            Apellido Materno:
+                        </label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input class="input-field" id="nombres" name="nombres" value="" size="30" maxlength="100"
+                            type="text" />
+                        <label class="input-field" for="nombres">
+                            Nombres:
+                        </label>
+                    </div>
+                     <div class="input-field col s6">
+                        <input class="input-field" id="ID_Documento" size="24" maxlength="18" name="ID_Documento"
+                            type="text" />
+                        <label class="input-field" for="ID_Documento">
+                            R.F.C.</label>
+                    </div>
+                        <div class="input-field col s6">
+                        <input id="email" name="email" value="" size="30" maxlength="100" type="text" />
+                        <label class="input-field" for="email">
+                            Email:</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input class="input-field" id="clave" size="15" maxlength="15" name="clave" value=""
+                            autocomplete="off" type="password" />
+                        <label class="input-field" for="clave">
+                            Contraseña:</label>
+                    </div>
+                </div>
+                   <input class="required" value="1" name="aceptaPrivacidad" id="aceptaPrivacidad" type="checkbox">
+                He leído el <a href="#" target="_blank">aviso de privacidad</a><br />
+                <input class="required" value="1" name="terminosCondiciones" id="terminosCondiciones"
+                    type="checkbox" />
+                He leído y acepto los <a href="#" target="_blank">Términos y Condiciones de Servicio</a>
+            </fieldset>
+            <fieldset class="ocultar">
+                <legend>Aviso de Privacidad</legend>
+                <hr />
+                <div id="datolargo1"  align="justify">
+                    <p>
+                        Sociedad Financiera Equipat, S.A. de C.V., señalando como domicilio convencional
+                        para los efectos relacionados con el presente aviso el ubicado en Paseo de la Reforma,
+                        número 300 Piso 7 Oficina 702, Colonia Juarez, C.P. 06600, en México Distrito Federal,
+                        hace de su conocimiento que sus datos personales serán protegidos de acuerdo a lo
+                        establecido por la Ley Federal de Protección de Datos Personales en Posesión de
+                        los Particulares así como por nuestra política de privacidad y que el tratamiento
+                        que se haga de sus datos será con la finalidad, enunciando sin limitar, de seguir
+                        el proceso de reclutamiento y selección, de captación de candidatos, análisis de
+                        CV, entrevistas telefónicas y/o por competencias, assessment center situacional,
+                        procesos de selección y todas aquellas actividades relacionadas con el proceso de
+                        reclutamiento y selección. Se entenderá que Usted ha otorgado su consentimiento
+                        para el tratamiento de sus datos personales al no ejercer sus derechos de Acceso,
+                        Rectificación, Cancelación y Oposición (derechos ARCO) establecidos en la citada
+                        Ley. Usted podrá consultar nuestro aviso de privacidad completo en la página de
+                        Internet www.equipat.com.mx</p>
+                </div>
+            </fieldset>
+            <div class="g-recaptcha" data-sitekey="6Le65f4SAAAAACUFJbJnBjj1bv_DkiVUSoPqyp5f"
+                data-stoken="">
+            </div>
+            <div class="clear">
+            </div>
+            <button id="enviar">
+                Guardar y continuar</button>
+        </div>
+        </form>
+    </div>
+    <div id="Confirm" class="ocultar">
+        <h1>Gracias</h1>
+        <h3>Confirma tu dirección de correo electrónico</h3>
+        <p>
+            ¡Gracias por registrarte! Acabamos de enviarte un mensaje de confirmación a <span
+                id="email_confim">usuario@mail.com</span>. Haz clic en el enlace de confinación
+            del mensaje para completar tu registro.
+        </p>
+        <button id="btnGoto">ir a <span id="spmtpop">Gmail</span> ahora</button>
+    </div>
+</body>
+</html>

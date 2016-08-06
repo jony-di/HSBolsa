@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html >
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <!-- CSS -->
+    <link href="../../../Recursos/css/tema.css" rel="stylesheet" type="text/css" />
+    <link href="css/jobsBook.css" rel="stylesheet" type="text/css" />
+    <!-- Scripts -->
+    <script src="../../../Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/Global.js" type="text/javascript"></script>
+    <script src="js/Vacantes.js" type="text/javascript"></script>
+    <!-- Other scripts -->
+</head>
+<body onload="inico()">
+    <div class="filter">
+        <label><span class="icon-search"><input id="txtBuscar" type="text" placeholder="Palabra de búsqueda" size="10" class="buscar" /></span>
+            <button onclick="bucarVacantes($('#txtBuscar').val())">Buscar</button></label>
+    </div>
+    <div id="bookjobs" class="bookjobs">
+        <div class="jobcar">
+            <div class="section">
+                <span class="titlejob"><a href="#">OPERADOR DE SISTEMAS</a></span>
+                <span class="datejob">Sep 3</span>
+            </div>
+            <div class="section">
+                <span class="jobdetail">No esperes mas y unete a nuestro equipo, solo necesitas: Tener
+                    entre 25 y 45 años Sexo Indistinto Licenciatura terminada Disponibilidad de Horario
+                    Dinamico, No esperes mas y unete a nuestro equipo, solo necesitas: Tener entre 25
+                    y 45 años Sexo Indistinto Licenciatura terminada Disponibilidad de Horario Dinamico</span>
+                <span class="jobpay">$7,000 MXN - $9,000 MXN Mensual</span>
+            </div>
+            <div class="section">
+                <span class="jobcity">Lugar de trabajo: Centro</span> <span class="jobcompany">Publicado
+                    por:Equipat</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

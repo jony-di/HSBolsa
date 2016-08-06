@@ -1,0 +1,5 @@
+﻿#main{height:550px;}
+h1{color: #33691E;font-family: 'Cocon' !important;text-transform: uppercase;text-align:center;}
+button{float:right;}
+.detalle{width:80%;text-align:justify;margin:auto;}
+iframe{width:95%;height:300px;border:solid 0px #f00;margin:20px 20px;}

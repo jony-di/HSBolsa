@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class="html">
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <!-- CSS -->
+    <link href="Recursos/css/tema.css?ver=1" rel="stylesheet" type="text/css" />
+    <link href="Recursos/css/default.css?ver=1" rel="stylesheet" type="text/css" />
+    <link href="Recursos/jqueryui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="Recursos/css/blueberry.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Scripts -->
+    <script src="Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="Recursos/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="Recursos/js/jquery.blueberry.js" type="text/javascript"></script>
+    <script src="Recursos/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="Recursos/js/jquery.blueberry.js" type="text/javascript"></script>
+
+    <!-- Other scripts -->
+    <script>
+        $(function () {
+            $("#accordion").accordion({
+                heightStyle: "content",
+                active: 1
+            });
+        });
+        $(window).load(function () {
+            $('.blueberry').blueberry({ interval: 5000, keynav: false, pager: false });
+        });
+    </script>
+</head>
+<body>
+    <div class="Main">
+        <aside>
+            <div id="accordion">
+                <h3>
+                    ¿Quienes somos?</h3>
+                <div>
+                </div>
+                <h3>
+                    ¿Te interesa unirte a nuestra Comunidad?</h3>
+                <div>
+                    <p>
+                        Te invitamos a formar parte de nuestra bolsa de trabajo, ¿qué tienes que hacer?,
+                        únicamente registra tus datos y el área de Recursos Humanos te contactará. Registra
+                        tu correo electrónico y genera tu contraseña para poder acceder, si ya estás registrado
+                        solo introduce tu correo y contraseña en las casillas correspondientes.
+                    </p>
+                </div>
+                <h3>
+                    ¿Por que pertenecer a nuestra Comunidad?</h3>
+                <div>
+                </div>
+                <h3>
+                    ¿Te interesa unirte a nuestra Comunidad?</h3>
+                <div>
+                </div>
+            </div>
+        </aside>
+        <article>
+            <section>
+                <div class="blueberry">
+                    <ul class="slides">
+                        <li>
+                            <img src="Recursos/images/gal/acatlipa.jpg" /></li>
+                        <li>
+                            <img src="Recursos/images/gal/DSC_9918%20copy.jpg" /></li>
+                        <li>
+                            <img src="Recursos/images/gal/DSC_9353%20copy.jpg" /></li>
+                    </ul>
+                </div>
+                <div class="blueberry" style="background-color: #C1D82F;">
+                    <ul class="slides" id="banner">
+                        <li>
+                            <img src="Recursos/images/header/BANNER-HEADER-01.png" /></li>
+                        <li>
+                            <img src="Recursos/images/header/BANNER-HEADER-06.png" /></li>
+                        <li>
+                            <img src="Recursos/images/header/BANNER-HEADER-02.png" /></li>
+                        <li>
+                            <img src="Recursos/images/header/BANNER-HEADER-03.png" /></li>
+                        <li>
+                            <img src="Recursos/images/header/BANNER-HEADER-04.png" /></li>
+                        <li>
+                            <img src="Recursos/images/header/BANNER-HEADER-05.png" /></li>
+                    </ul>
+                </div>
+            </section>
+        </article>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<emaildef remitente="reportetflow@equipat.com.mx" host="AFRODITA.equipat.com.mx" usuario="reportetflow"  clave="*.tflow123" puerto="587">
+  <destinatarios>
+    <destinatario>{$MAIL_CANDIDATO}</destinatario>
+    <cc></cc>
+    <bcc></bcc>
+  </destinatarios>
+  <body asunto="Cambio de password" alias="Equipat.com.mx">
+    <![CDATA[
+    <div style="text-align:center;color:#4F6F19;">
+      <h3>Cambio de password</h3>
+      <p>Haz solicitado el cambio de tu password porfavor da click <a href="http://{$DOMINIO_SITE}/bolsa/Modulos/Seguridad/Controlador/usuario.aspx?seccion=usuario&op=cambiar&key={$CADENA_CANDIDATO}">aquí para hacer el cambio</a></p>
+      <br/>
+		  <br/>
+		  <br/>
+		  <p>Si recibes este correo y tú no te registraste en nuestra bolsa de trabajo, por favor elimina este mensaje</p>
+		  <img src="http://10.0.0.24/bolsa/Recursos/images/logoEmail.jpg">
+    </div>
+    ]]>
+  </body>
+</emaildef>

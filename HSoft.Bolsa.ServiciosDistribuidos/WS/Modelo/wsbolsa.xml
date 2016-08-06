@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Secciones>
+  <Candidatos>
+    <obtenerCandidatos>
+      <sql>
+        <![CDATA[
+          SELECT nombreTabla FROM (VALUES ('CON_Candidatos|RFC'))Q(nombreTabla);
+          SELECT 
+           Candidatos.RFC
+          ,Solicitudes.cve_solicitudvacante
+          ,1
+          ,Candidatos.Nombres
+          ,Candidatos.ApellidoPaterno
+          ,Candidatos.ApellidoMaterno
+          ,Candidatos.cve_estado
+          ,Candidatos.cve_Municipio
+          ,AniosExp.detalle
+          ,Candidatos.FechaNacimiento
+          ,AreasExperiencia.descripcion
+          ,sexo.descripcion
+          ,estadocivil.descripcion
+          ,Escolaridad.NivelEscolar
+          ,EstadoEstudios.descripcion
+          ,Candidatos.Foto_Base64
+          ,Candidatos.CV_Base64
+          ,Candidatos.Telefonos
+          FROM CAN_Informacion Candidatos
+          INNER JOIN CAN_SolicitudCandidato Solicitudes
+          ON Candidatos.RFC=Solicitudes.RFC
+          INNER JOIN CAT_sexo sexo
+          ON Candidatos.cve_sexo = sexo.cve_sexo
+          INNER JOIN CAT_estadocivil estadocivil
+          ON Candidatos.cve_estadocivil = estadocivil.cve_estadocivil
+          INNER JOIN CAT_AniosExp AniosExp
+          ON Candidatos.cve_AniosExp = AniosExp.cva_Anios
+          INNER JOIN CAT_AreasExperiencia AreasExperiencia
+          ON Candidatos.cve_Area=AreasExperiencia.cve_AreasExperiencia
+          INNER JOIN (SELECT B.RFC, MAX(B.Nivel) AS 'Nivel', A.NivelEscolar FROM CAT_NivelEscolar A INNER JOIN CAN_Escolaridad B ON A.cve_NivelEscolar=B.cve_NivelEscolar GROUP BY  B.RFC, A.NivelEscolar ) Escolaridad
+          ON Candidatos.RFC =Escolaridad.RFC
+          INNER JOIN (SELECT B.RFC, MAX(B.Nivel) AS 'Nivel', A.descripcion FROM CAT_EstadoEstudios A INNER JOIN CAN_Escolaridad B ON A.cve_EstadoEstudios=B.Estado  GROUP BY  B.RFC, A.descripcion ) EstadoEstudios
+          ON Candidatos.RFC =EstadoEstudios.RFC
+          WHERE @cve_vacante=@cve_vacante
+        ]]>
+      </sql>
+    </obtenerCandidatos>
+  </Candidatos>
+  <Examenes>
+    <ObtenerRespuestasCandidato>
+      <sql>
+        <![CDATA[
+           SELECT nombreTabla FROM (VALUES ('EXA_candrespuestas|cve_examen,cve_candidato'))Q(nombreTabla);
+           SELECT * FROM EXA_candrespuestas  WHERE cve_examen=@cve_examen AND cve_candidato=@cve_candidato --AND cve_vacante=@cve_vacante;
+        ]]>
+      </sql>
+    </ObtenerRespuestasCandidato>
+  </Examenes>
+</Secciones>

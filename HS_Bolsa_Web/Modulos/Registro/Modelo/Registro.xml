@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Secciones>
+  <filtros>
+    <obtenerAniosExp>
+      <sql>
+        <![CDATA[SELECT cva_Anios  AS 'Clave',detalle FROM CAT_AniosExp where activo=1]]>
+      </sql>
+    </obtenerAniosExp>
+    <obtenerNacionalidades>
+      <sql>
+        <![CDATA[ SELECT cve_Nacionalidad,Nacionalidad FROM cat_Nacionalidad ]]>
+      </sql>
+    </obtenerNacionalidades>
+    <obtenerEstados>
+      <sql>
+        <![CDATA[SELECT cve_estado AS 'Clave',nombreestado AS 'Nombre' FROM CAT_estados WHERE activo = 1 order by nombreestado]]>
+      </sql>
+    </obtenerEstados>
+    <obtenerMunicipios>
+      <campo leyenda="Estado" db_nombre="estado" form_nombre="estado" requerido="true" charsize="10" tipo="string"/>
+      <sql>
+        <![CDATA[SELECT cve_municipio,nombremuni FROM CAT_municipio WHERE cve_estado=@estado and activo=1 ORDER BY nombremuni]]>
+      </sql>
+    </obtenerMunicipios>
+    <obtenerSexos>
+      <sql>
+        <![CDATA[SELECT cve_sexo AS 'Clave', descripcion FROM CAT_sexo WHERE activo=1]]>
+      </sql>
+    </obtenerSexos>
+    <obtenerEstadoCivil>
+      <sql>
+        <![CDATA[SELECT cve_estadocivil AS 'Clave',descripcion FROM CAT_estadocivil WHERE activo=1]]>
+      </sql>
+    </obtenerEstadoCivil>
+    <obtenerNivelEscolar>
+      <sql>
+        <![CDATA[SELECT cve_NivelEscolar AS 'Clave', NivelEscolar AS 'descripcion' FROM CAT_NivelEscolar WHERE activo=1]]>
+      </sql>
+    </obtenerNivelEscolar>
+    <obtenerEstadoEstudios>
+      <sql>
+        <![CDATA[SELECT cve_EstadoEstudios AS 'Clave', descripcion FROM CAT_EstadoEstudios WHERE activo = 1]]>
+      </sql>
+    </obtenerEstadoEstudios>
+    <obtenerAreas>
+      <sql>
+        <![CDATA[SELECT cve_AreasExperiencia AS 'Clave', descripcion FROM CAT_AreasExperiencia WHERE activo = 1]]>
+      </sql>
+    </obtenerAreas>
+  </filtros>
+  <registo>
+    <nuevo>
+      <campo leyenda="Nombres" db_nombre="nombres" form_nombre="nombres" requerido="true" charsize="180" tipo="string" default=""/>
+      <campo leyenda="Apellido Paterno" db_nombre="paterno" form_nombre="APaterno" requerido="true" charsize="180" tipo="string" default=""/>
+      <campo leyenda="Apellido Materno" db_nombre="materno" form_nombre="AMaterno" requerido="true" charsize="180" tipo="string" default=""/>
+      <campo leyenda="Email" db_nombre="email" form_nombre="email" requerido="true" charsize="50" tipo="string" default=""/>
+      <campo leyenda="Contraseña" db_nombre="password" form_nombre="clave" requerido="true" charsize="50" tipo="string" default="" cifrado="true"/>
+      <campo leyenda="RFC" db_nombre="rfc" form_nombre="ID_Documento" requerido="true" charsize="20" tipo="string" default=""/>
+      <sql>
+        <![CDATA[
+         SET NOCOUNT ON;
+          SET IMPLICIT_TRANSACTIONS ON
+          BEGIN TRY
+          IF NOT EXISTS(SELECT * FROM CAN_usuarios WHERE usuario=@rfc) AND NOT EXISTS(SELECT * FROM CAN_Informacion WHERE email=@email) BEGIN
+              INSERT INTO CAN_usuarios(
+              usuario
+              ,contrasenia
+              ,fecha_creacion)
+              VALUES(
+              @rfc,
+              @password,
+              GETDATE());
+              
+              INSERT INTO CAN_Informacion(RFC,ApellidoPaterno,ApellidoMaterno,Nombres,email) values(@rfc, @paterno, @materno, @nombres, @email);
+              
+              COMMIT TRANSACTION;
+              SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+            END
+            ELSE BEGIN
+              SELECT -1 AS estatus, 'Error:El correo o RFC ya ha sido registrado anteriormente' as mensaje;
+            END
+          END TRY
+          BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+          END CATCH
+      ]]>
+      </sql>
+    </nuevo>
+    <validar>
+      <sql>
+        <![CDATA[
+           SET NOCOUNT ON;
+          BEGIN TRY
+          UPDATE A
+          SET email_verificado=1
+          from CAN_usuarios a
+          INNER JOIN CAN_Informacion b
+          on a.usuario=b.RFC
+          WHERE 
+          b.email=@correo
+            SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+          END TRY
+          BEGIN CATCH
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+          END CATCH
+        ]]>
+      </sql>
+    </validar>
+  </registo>
+  <frmBase>
+    <validaRegistro>
+      <sql>
+        <![CDATA[
+          IF EXISTS(SELECT * FROM CAN_Informacion where RFC = @RFC AND verPerfil=1)BEGIN
+            SELECT 1 estatus, 'Registro correctamente' mensaje;
+          END
+          ELSE BEGIN
+            SELECT -1 AS estatus,  'No registrado' AS mensaje;
+          END
+        ]]>
+      </sql>
+    </validaRegistro>
+    <gardarDatosGenerales>
+      <campo leyenda="Estado" db_nombre="pais" form_nombre="pais" requerido="true" charsize="0" tipo="int" default="1"/>
+      <campo leyenda="Estado" db_nombre="estado" form_nombre="estado" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Delegacion o Municipio" db_nombre="municipio" form_nombre="municipio" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Código Posta" db_nombre="cp" form_nombre="cp" requerido="true" charsize="50" tipo="string" default=""/>
+      <campo leyenda="Sexo" db_nombre="sexo" form_nombre="sexo" requerido="true" charsize="0" tipo="int" />
+      <campo leyenda="Estado Civil" db_nombre="civil" form_nombre="civil" requerido="true" charsize="0" tipo="int"/>
+      <campo leyenda="Fecha de nacimiento" db_nombre="fechaN" form_nombre="fechaN" requerido="true" charsize="50" tipo="string" default=""/>
+      <campo leyenda="Telefono" db_nombre="tel" form_nombre="tel" requerido="true" charsize="50" tipo="string" default=""/>
+      <sql>
+        <![CDATA[
+         SET LANGUAGE español;
+          SET NOCOUNT ON;
+          SET IMPLICIT_TRANSACTIONS ON
+          BEGIN TRY
+            UPDATE CAN_Informacion
+            SET FechaNacimiento=CONVERT(DATE,@fechaN,106)
+            ,cve_sexo=@sexo
+            ,cve_estadoCivil=@civil
+            ,Telefonos=@tel
+            ,cve_pais=@pais
+            ,cve_estado=@estado
+            ,cve_municipio=@municipio
+            ,CP=@cp
+            WHERE RFC =@RFC
+            COMMIT TRANSACTION
+             SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+          END TRY
+          BEGIN CATCH
+            ROLLBACK TRANSACTION
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+          END CATCH
+        ]]>
+      </sql>
+    </gardarDatosGenerales>
+    <DatosLaborales>
+      <campo leyenda="Encabezado" db_nombre="encabezado" form_nombre="resumetitle" requerido="true" charsize="180" tipo="string" />
+      <campo leyenda="Área de Experiencia" db_nombre="arealExp" form_nombre="arealExp" requerido="true" charsize="10" tipo="int" />
+      <campo leyenda="Años de Experiencia" db_nombre="anios" form_nombre="anios" requerido="true" charsize="10" tipo="int"/>
+      <sql>
+        <![CDATA[
+          SET NOCOUNT ON;
+          SET IMPLICIT_TRANSACTIONS ON
+          BEGIN TRY
+            UPDATE CAN_Informacion
+            SET
+            Titulo=@encabezado
+            ,cve_Area=@arealExp
+            ,cve_AniosExp=@anios
+            WHERE RFC=@RFC
+            COMMIT TRANSACTION
+            SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+          END TRY
+          BEGIN CATCH
+            ROLLBACK TRANSACTION
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+          END CATCH
+        ]]>
+      </sql>
+    </DatosLaborales>
+    <archivos>
+      <sql>
+        <![CDATA[
+         SET NOCOUNT ON;
+         SET IMPLICIT_TRANSACTIONS ON
+         BEGIN TRY
+            UPDATE CAN_Informacion
+            SET
+              Foto_Base64=@foto
+              ,CV_Base64=@CV_DOC
+              ,verPerfil=1
+              WHERE RFC=@RFC
+            COMMIT TRANSACTION
+            SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+          END TRY
+          BEGIN CATCH
+            ROLLBACK TRANSACTION
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() mensaje;
+          END CATCH
+        ]]>
+      </sql>
+    </archivos>
+    <guardarReferenciaLaboral>
+      <campo leyenda="Nombre de la empresa" db_nombre="empresa" form_nombre="empresa" requerido="true" charsize="100" tipo="string" />
+      <campo leyenda="Fecha de ingreso" db_nombre="fchIngreso" form_nombre="fchIngreso" requerido="true" charsize="50" tipo="string" />
+      <campo leyenda="Fecha de Salida" db_nombre="fchSalida" form_nombre="fchSalida" requerido="true" charsize="50" tipo="string" />
+      <campo leyenda="Nombre del jefe inmediato" db_nombre="jefe" form_nombre="jefe" requerido="true" charsize="100" tipo="string" />
+      <campo leyenda="Telefono" db_nombre="tel" form_nombre="telEmpresa" requerido="true" charsize="50" tipo="string" />
+      <campo leyenda="Puesto" db_nombre="puesto" form_nombre="puesto" requerido="true" charsize="100" tipo="string" />
+      <campo leyenda="Salario" db_nombre="salario" form_nombre="salario" requerido="true" charsize="0" tipo="float" />
+      <sql>
+        <![CDATA[
+            SET LANGUAGE español;
+            SET NOCOUNT ON;
+            INSERT INTO CAN_ExperienciaLaboral(
+             RFC
+            ,CVE_Referencia
+            ,NombreCompania
+            ,FechaInicio
+            ,FechaCulminacion
+            ,Puesto
+            ,SueldoMensualFinal
+            ,JefeInmediato
+            ,Telefono)
+            VALUES(
+             @RFC
+            ,(SELECT ISNULL(MAX(CVE_Referencia),0)+1 FROM CAN_ExperienciaLaboral WHERE RFC=@RFC)
+            ,@empresa
+            ,CONVERT(date,@fchIngreso,106)
+            ,CONVERT(date,CASE WHEN @fchSalida ='Trabajo actual' then '01/Ene/1900' ELSE @fchSalida END,106)
+            ,@puesto
+            ,@salario
+            ,@jefe
+            ,@tel)
+            SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+        ]]>
+      </sql>
+    </guardarReferenciaLaboral>
+    <obtenerReferenciasLaborales>
+      <sql>
+        <![CDATA[
+          SET LANGUAGE español;
+          SELECT 
+                 CVE_Referencia AS 'Clave'
+                ,NombreCompania
+                ,DATENAME(MONTH,FechaInicio) + ' ' + CONVERT(VARCHAR,DATEPART(YEAR,FechaInicio)) + ' - ' + CASE WHEN DATEPART(YEAR,FechaCulminacion) = 1900 THEN 'Actual' ELSE DATENAME(MONTH,FechaCulminacion) + ' ' + CONVERT(VARCHAR,DATEPART(YEAR,FechaCulminacion)) END AS 'Fecha'
+                ,Puesto
+          FROM CAN_ExperienciaLaboral
+          WHERE RFC =@RFC
+        ]]>
+      </sql>
+    </obtenerReferenciasLaborales>
+    <quitarReferenciaLaboral>
+      <campo leyenda="Calve" db_nombre="CVE" form_nombre="cve" requerido="true" charsize="0" tipo="int" />
+      <sql>
+        <![CDATA[
+          DELETE CAN_ExperienciaLaboral WHERE RFC=@RFC AND CVE_Referencia=@CVE
+          SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+        ]]>
+      </sql>
+    </quitarReferenciaLaboral>
+    <gardarEscolaridad>
+      <campo leyenda="Nombre de la escuela" db_nombre="Escuela" form_nombre="escuela" requerido="true" charsize="100" tipo="string" />
+      <campo leyenda="Qué estudiaste" db_nombre="Titulo" form_nombre="estudios" requerido="true" charsize="100" tipo="string" />
+      <campo leyenda="Nivel de estudios" db_nombre="Nivel" form_nombre="Nivelestudios" requerido="true" charsize="10" tipo="int"/>
+      <campo leyenda="Situación académica" db_nombre="Estado" form_nombre="SituacionEstudios" requerido="true" charsize="10" tipo="int"/>
+      <sql>
+        <![CDATA[
+          INSERT INTO CAN_Escolaridad(RFC
+          ,cve_NivelEscolar
+          ,Institucion
+          --,FechaInicio
+          --,FechaFin
+          ,TituloRecibido
+          ,Nivel
+          ,Estado)
+	        VALUES(
+           @RFC
+           ,(SELECT ISNULL(MAX(cve_NivelEscolar),0)+1 FROM CAN_Escolaridad WHERE RFC=@RFC)
+          ,@Escuela
+          ,@Titulo
+          ,@Nivel
+          ,@Estado)
+           SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+        ]]>
+      </sql>
+    </gardarEscolaridad>
+    <obtenerEscolaridad>
+      <sql>
+        <![CDATA[
+           SELECT A.cve_NivelEscolar AS 'Clave'
+          ,Institucion
+          ,TituloRecibido
+          ,C.NivelEscolar
+          ,B.descripcion
+          FROM CAN_Escolaridad A
+          INNER JOIN CAT_EstadoEstudios B
+          ON A.Estado=B.cve_EstadoEstudios
+          INNER JOIN CAT_NivelEscolar C
+          ON A.Nivel=C.cve_NivelEscolar
+          WHERE RFC =@RFC
+        ]]>
+      </sql>
+    </obtenerEscolaridad>
+    <quitarEscuela>
+      <campo leyenda="Calve" db_nombre="CVE" form_nombre="cve" requerido="true" charsize="0" tipo="int" />
+      <sql>
+        <![CDATA[
+          DELETE CAN_Escolaridad WHERE RFC=@RFC AND cve_NivelEscolar=@CVE
+          SELECT 1 estatus, 'Registro guardado correctamente' mensaje;
+        ]]>
+      </sql>
+    </quitarEscuela>
+    <obtenerTodo>
+      <sql>
+        <![CDATA[
+            SELECT RFC
+            ,ApellidoPaterno
+            ,ApellidoMaterno
+            ,Nombres
+            ,CONVERT(VARCHAR,FechaNacimiento,103) AS 'FechaNacimiento'
+            ,cve_sexo
+            ,cve_estadoCivil
+            ,Foto_Base64
+            ,cve_AniosExp
+            ,cve_Area
+            ,CV_Base64
+            ,verPerfil
+            ,Telefonos
+            ,email
+            ,cve_pais
+            ,cve_estado
+            ,cve_municipio
+            ,CP
+            ,Titulo
+            FROM CAN_Informacion WHERE RFC=@RFC
+        ]]>
+      </sql>
+    </obtenerTodo>
+  </frmBase>
+</Secciones>

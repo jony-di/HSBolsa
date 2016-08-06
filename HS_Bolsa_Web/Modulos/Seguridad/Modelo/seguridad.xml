@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Secciones>
+  <session>
+    <iniciar>
+      <campo leyenda="Contraseña" db_nombre="contrasenia" form_nombre="clave" requerido="true" charsize="50" tipo="string" default="" cifrado="true"/>
+      <campo leyenda="Usuario" db_nombre="usuario" form_nombre="usuario" requerido="true" charsize="20" tipo="string" default=""/>
+      <sql>
+        <![CDATA[
+          SET NOCOUNT ON;
+          BEGIN TRY
+           IF exists(SELECT * FROM CAN_usuarios WHERE usuario=@usuario and contrasenia=@contrasenia and email_verificado=1 and activo=1 and errores_login<4) BEGIN
+              UPDATE CAN_usuarios
+              SET errores_login=0
+              ,fecha_vencimiento_sesion=DATEADD(MINUTE,15,GETDATE())
+              ,fecha_ultimo_login=GETDATE()
+              WHERE usuario=@usuario and contrasenia=@contrasenia
+              SELECT 1 AS 'estatus' , usuario AS 'mensaje' FROM CAN_usuarios Usuario  WHERE usuario=@usuario AND contrasenia=@contrasenia
+            END
+            ELSE BEGIN
+              IF exists(SELECT * FROM CAN_usuarios WHERE usuario=@usuario and cambiar_pass=1) BEGIN
+                SELECT -1 AS 'estatus', 'Se solicito el cambio de contrasenia. Revisa tu correo' AS 'mensaje', email FROM CAN_Informacion  WHERE RFC=@usuario;
+              END 
+              ELSE IF exists(SELECT * FROM CAN_usuarios WHERE usuario=@usuario and email_verificado=0) BEGIN
+                SELECT -2 AS 'estatus', 'No se a validado el correo. Revisa tu correo' AS 'mensaje', email,Nombres,ApellidoPaterno,RFC FROM CAN_Informacion  WHERE RFC=@usuario;
+              END
+              ELSE IF exists(SELECT * FROM CAN_usuarios WHERE usuario=@usuario and errores_login<3) BEGIN
+                UPDATE CAN_usuarios
+                SET errores_login=errores_login+1
+                WHERE 
+                usuario=@usuario 
+                SELECT 0 AS estatus,  'Usuario o contraseña no validos' AS 'mensaje';
+              END
+              ELSE IF exists(SELECT * FROM CAN_usuarios WHERE usuario=@usuario and errores_login>=3) BEGIN
+                UPDATE CAN_usuarios
+                SET contrasenia=''
+                ,cambiar_pass=1
+                WHERE 
+                usuario=@usuario 
+                SELECT -3 AS estatus,  'Tu usuario ha sido bloqueado. Te enviamos un correo para que lo actives' AS 'mensaje', email FROM CAN_Informacion  WHERE RFC=@usuario;
+              END
+              ELSE BEGIN
+                SELECT 0 AS estatus,  'Usuario o contraseña no validos' AS 'mensaje';
+              END
+            END
+          END TRY
+          BEGIN CATCH
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() AS 'mensaje';
+          END CATCH
+        ]]>
+      </sql>
+    </iniciar>
+    <signed>
+      <sql>
+        <![CDATA[
+          SELECT 1 AS 'estatus' ,Candidato.Nombres+ ' ' +Candidato.ApellidoPaterno as nombre, Usuario.usuario ,Candidato.Foto_Base64 ,Candidato.verPerfil FROM CAN_usuarios Usuario INNER JOIN CAN_Informacion Candidato ON Usuario.usuario = Candidato.RFC WHERE usuario=@usuario
+        ]]>
+      </sql>
+    </signed>
+  </session>
+  <usuario>
+    <olvido>
+      <campo leyenda="Email" db_nombre="email" form_nombre="email" requerido="true" charsize="50" tipo="string" default=""/>
+      <sql>
+        <![CDATA[
+          SET NOCOUNT ON;
+          BEGIN TRY
+            IF EXISTS(SELECT * FROM CAN_Informacion WHERE email=@email) BEGIN
+              UPDATE A
+              SET A.contrasenia=''
+              ,A.cambiar_pass=1
+              FROM CAN_usuarios A
+              INNER JOIN CAN_Informacion B
+              ON A.usuario=B.RFC
+              WHERE B.email=@email
+              SELECT 1 AS 'estatus', 'Te hemos enviado un correo para que recuperes tu contraseña' AS 'mensaje', @email AS 'email';
+            END 
+            ELSE BEGIN
+              SELECT -1 AS estatus, 'No se encotrol el correo' AS 'mensaje';
+            END
+          END TRY
+          BEGIN CATCH
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() AS 'mensaje';
+          END CATCH
+        ]]>
+      </sql>
+    </olvido>
+    <cambiar>
+      <sql>
+        <![CDATA[
+        SET NOCOUNT ON;
+          BEGIN TRY
+            IF EXISTS(SELECT * FROM CAN_Informacion WHERE email=@correo) BEGIN
+              SELECT 1 AS 'estatus', usuario AS 'mensaje' FROM CAN_usuarios A INNER JOIN CAN_Informacion B ON A.usuario=B.RFC WHERE B.email=@correo
+            END 
+            ELSE BEGIN
+              SELECT -1 AS estatus, 'No se encotrol el correo' AS 'mensaje';
+            END
+          END TRY
+          BEGIN CATCH
+            SELECT -2 AS estatus,  'Error: ' + ERROR_MESSAGE() AS 'mensaje';
+          END CATCH
+        ]]>
+      </sql>
+    </cambiar>
+    <nuevoPass>
+      <campo leyenda="Contraseña" db_nombre="pass" form_nombre="contra1" requerido="true" charsize="20" tipo="string" cifrado="true"/>
+      <sql>
+        <![CDATA[
+          SET NOCOUNT ON;
+          BEGIN TRY
+            IF EXISTS(SELECT * FROM CAN_usuarios WHERE usuario=@usuario) BEGIN
+              UPDATE CAN_usuarios
+              SET
+              contrasenia=@pass
+              ,cambiar_pass=0
+              ,errores_login=0
+              ,fecha_ultimo_login=GETDATE()
+              WHERE
+              usuario=@usuario
+              SELECT 1 AS estatus, 'Se cambio la contraseña correcatamente' AS 'mensaje';
+            END 
+            ELSE BEGIN
+              SELECT -1 AS estatus, 'No se encotrol el correo' AS 'mensaje';
+            END
+          END TRY
+          BEGIN CATCH
+            SELECT -1 AS estatus,  'Error: ' + ERROR_MESSAGE() AS 'mensaje';
+          END CATCH
+        ]]>
+      </sql>
+    </nuevoPass>
+    <obtenerImagen>
+      <sql>
+        <![CDATA[
+          SELECT Foto_Base64 FROM CAN_Informacion WHERE RFC = @RFC
+        ]]>
+      </sql>
+    </obtenerImagen>
+  </usuario>
+</Secciones>

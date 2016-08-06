@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6EC4BCC6-F66C-4FB5-9899-B58FE6ED2447}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HS_Bolsa_Web</RootNamespace>
+    <AssemblyName>HS_Bolsa_Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <TargetFrameworkProfile />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="500.html" />
+    <Content Include="Info.html" />
+    <Content Include="index.html" />
+    <Content Include="Default.html" />
+    <Content Include="Modulos\Candidatos\Controlador\Perfil.aspx" />
+    <Content Include="Modulos\Candidatos\Modelo\Perfil.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Modulos\Candidatos\Vista\css\Informacion.css" />
+    <Content Include="Modulos\Candidatos\Vista\css\Perfil.css" />
+    <Content Include="Modulos\Candidatos\Vista\Informacion.htm" />
+    <Content Include="Modulos\Candidatos\Vista\js\Informacion.js" />
+    <Content Include="Modulos\Candidatos\Vista\js\Perfil.js" />
+    <Content Include="Modulos\Candidatos\Vista\Pefil.html" />
+    <Content Include="Modulos\Examenes\Controlador\Examenes.aspx" />
+    <Content Include="Modulos\Examenes\Modelo\Examenes.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Modulos\Examenes\Vista\Examenes.html" />
+    <Content Include="Modulos\Examenes\Vista\js\examenes.js" />
+    <Content Include="Modulos\Registro\Controlador\Registro.aspx" />
+    <Content Include="Modulos\Registro\Metadata\EMAILDEF.xml" />
+    <Content Include="Modulos\Registro\Modelo\Registro.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Modulos\Registro\Vista\css\frmBase.css" />
+    <Content Include="Modulos\Registro\Vista\css\Registro.css" />
+    <Content Include="Modulos\Registro\Vista\css\Validacion.css" />
+    <Content Include="Modulos\Registro\Vista\frmBase.html" />
+    <Content Include="Modulos\Registro\Vista\frmComplementario.html" />
+    <Content Include="Modulos\Registro\Vista\js\frmBase.js" />
+    <Content Include="Modulos\Registro\Vista\js\Registro.js" />
+    <Content Include="Modulos\Registro\Vista\Registro.html" />
+    <Content Include="Modulos\Registro\Vista\validacion.html" />
+    <Content Include="Modulos\Seguridad\Controlador\session.aspx" />
+    <Content Include="Modulos\Seguridad\Controlador\usuario.aspx" />
+    <Content Include="Modulos\Seguridad\Metadata\EMAILDEF.xml" />
+    <Content Include="Modulos\Seguridad\Modelo\seguridad.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Modulos\Seguridad\Vista\cambio.html" />
+    <Content Include="Modulos\Seguridad\Vista\css\Cambio.css" />
+    <Content Include="Modulos\Seguridad\Vista\js\Cambio.js" />
+    <Content Include="Modulos\Vacantes\Controlador\Vacantes.aspx" />
+    <Content Include="Modulos\Vacantes\Modelo\Modelo.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Modulos\Vacantes\Vista\css\frmAplicar.css" />
+    <Content Include="Modulos\Vacantes\Vista\css\jobsBook.css" />
+    <Content Include="Modulos\Vacantes\Vista\css\Vacante.css" />
+    <Content Include="Modulos\Vacantes\Vista\frmAplicar.html" />
+    <Content Include="Modulos\Vacantes\Vista\js\frmAplicar.js" />
+    <Content Include="Modulos\Vacantes\Vista\js\vacante.js" />
+    <Content Include="Modulos\Vacantes\Vista\js\Vacantes.js" />
+    <Content Include="Modulos\Vacantes\Vista\vacante.html" />
+    <Content Include="Modulos\Vacantes\Vista\vacantes.html" />
+    <Content Include="Recursos\css\blueberry.css" />
+    <Content Include="Recursos\css\FlipSwitch.css" />
+    <Content Include="Recursos\css\index.css" />
+    <Content Include="Recursos\css\fontCocon.css" />
+    <Content Include="Recursos\css\icomoonFont.css" />
+    <Content Include="Recursos\css\default.css" />
+    <Content Include="Recursos\css\Info.css" />
+    <Content Include="Recursos\css\tema.css" />
+    <Content Include="Recursos\fonts\CoconLight\fontCoconLight.css" />
+    <Content Include="Recursos\fonts\CoconLight\index.html" />
+    <Content Include="Recursos\fonts\icomoon\icomoon.svg" />
+    <Content Include="Recursos\images\background.jpg" />
+    <Content Include="Recursos\images\bg-accesocv.jpg" />
+    <Content Include="Recursos\images\down-arrow.png" />
+    <Content Include="Recursos\images\favicon.ico" />
+    <Content Include="Recursos\images\female_user.png" />
+    <Content Include="Recursos\images\gal\acatlipa.jpg" />
+    <Content Include="Recursos\images\gal\DSC_9353 copy.jpg" />
+    <Content Include="Recursos\images\gal\DSC_9918 copy.jpg" />
+    <Content Include="Recursos\images\header\BANNER-HEADER-01.png" />
+    <Content Include="Recursos\images\header\BANNER-HEADER-02.png" />
+    <Content Include="Recursos\images\header\BANNER-HEADER-03.png" />
+    <Content Include="Recursos\images\header\BANNER-HEADER-04.png" />
+    <Content Include="Recursos\images\header\BANNER-HEADER-05.png" />
+    <Content Include="Recursos\images\header\BANNER-HEADER-06.png" />
+    <Content Include="Recursos\images\header\Poster.png" />
+    <Content Include="Recursos\images\Logo1.png" />
+    <Content Include="Recursos\images\logoEmail.jpg" />
+    <Content Include="Recursos\images\male_user.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_flat_45_5F96CC_40x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_flat_55_999999_40x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_flat_75_5F96CC_40x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_flat_75_aaaaaa_40x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_highlight-soft_50_7892C2_1x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_highlight-soft_75_5F96CC_1x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Recursos\jqueryui\images\ui-icons_0078ae_256x240.png" />
+    <Content Include="Recursos\jqueryui\images\ui-icons_056b93_256x240.png" />
+    <Content Include="Recursos\jqueryui\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Recursos\jqueryui\images\ui-icons_e0fdff_256x240.png" />
+    <Content Include="Recursos\jqueryui\images\ui-icons_f5e175_256x240.png" />
+    <Content Include="Recursos\jqueryui\images\ui-icons_f7a50d_256x240.png" />
+    <Content Include="Recursos\jqueryui\images\ui-icons_fcd113_256x240.png" />
+    <Content Include="Recursos\jqueryui\jquery-ui.min.css" />
+    <Content Include="Recursos\jqueryui\jquery-ui.min.js" />
+    <Content Include="Recursos\js\default.js" />
+    <Content Include="Recursos\js\Global.js" />
+    <Content Include="Recursos\js\jquery-1.11.3.min.js" />
+    <Content Include="Recursos\js\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Recursos\js\jquery.blueberry.js" />
+    <Content Include="Recursos\js\jquery.bpopup.min.js" />
+    <Content Include="Recursos\js\jquery.validate.min.js" />
+    <Content Include="Recursos\js\jquery.watch.js" />
+    <Content Include="Recursos\js\seguridad.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Modulos\Examenes\Controlador\Examenes.aspx.cs">
+      <DependentUpon>Examenes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modulos\Examenes\Controlador\Examenes.aspx.designer.cs">
+      <DependentUpon>Examenes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Recursos\fonts\CoconLight\CoconLight.eot" />
+    <None Include="Recursos\fonts\CoconLight\CoconLight.ttf" />
+    <None Include="Recursos\fonts\CoconLight\CoconLight.woff" />
+    <None Include="Recursos\fonts\cocon\cocon.ttf" />
+    <None Include="Recursos\fonts\icomoon\icomoon.eot" />
+    <None Include="Recursos\fonts\icomoon\icomoon.ttf" />
+    <None Include="Recursos\fonts\icomoon\icomoon.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modulos\Candidatos\Metadata\" />
+    <Folder Include="Modulos\Examenes\Metadata\" />
+    <Folder Include="Modulos\Examenes\Vista\css\" />
+    <Folder Include="Modulos\Vacantes\Metadata\Perfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HSBolsaServer\HSoft.Bolsa.Server.csproj">
+      <Project>{7D979974-836F-4B24-AD9A-7FEA3C51AF2A}</Project>
+      <Name>HSoft.Bolsa.Server</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>5530</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

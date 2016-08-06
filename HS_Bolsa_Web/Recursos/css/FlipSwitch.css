@@ -1,0 +1,49 @@
+﻿.onoffswitch {
+    position: relative; width: 71px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #FFFFFF; border-radius: 30px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+    cursor:pointer !important;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 20px; padding: 0; line-height: 20px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "SI";
+    padding-left: 10px;
+    background-color: #3EB2C8; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "NO";
+    padding-right: 10px;
+    background-color: #D1D1D1; color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 30px; margin: -5px;
+    background: #3EB2C8;
+    position: absolute; top: 0; bottom: 0;
+    right: 47px;
+    /*border: 2px solid #FFFFFF;*/
+    border-radius: 30px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+    cursor:pointer;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+    cursor:pointer;
+}

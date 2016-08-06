@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- CSS -->
+    <link href="../../../Recursos/css/tema.css" rel="stylesheet" type="text/css" />
+    <link href="css/Cambio.css" rel="stylesheet" type="text/css" />
+    <!-- Scripts -->
+    <script src="../../../Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/Global.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="../../../Recursos/js/seguridad.js" type="text/javascript"></script>
+    <script src="js/Cambio.js" type="text/javascript"></script>
+    <!-- Other scripts -->
+    <script>
+        (function ($, W, D) {
+            var JQUERY4U = {};
+            jQuery.validator.addMethod("RFC", function (value, element) {
+                // allow any non-whitespace characters as the host part
+                var re = new RegExp("^[A-Za-z]{4}\\d{6}(?:\\-[A-Za-z\\d]{3})?$");
+                return this.optional(element) || re.test(value);
+            }, 'Por favor, introduce un RFC válido.');
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //form validation rules
+                    $("#frmCambio").validate({
+                        rules: {
+                            contra1: {
+                                required: true,
+                                minlength: 5
+                            },
+                            contra2: {
+                                required: true,
+                                equalTo:"#contra1"
+                            }
+                        },
+                        messages: {
+                            contra1: {
+                                required: "Por favor ingrese su contraseña",
+                                minlength: "Tu contraseña debe tener al menos 5 caracteres"
+                            },
+                            contra2: {
+                               required: "Por favor ingrese su contraseña",
+                                equalTo: "Las contraseñas no coinciden"
+                            }
+                        },
+                        submitHandler: function (form) {
+                            $("#enviar").hide();
+                            guardar();
+                        }
+                    });
+                }
+            }
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+        })(jQuery, window, document);
+    </script>
+</head>
+<body>
+    <form id="frmCambio" autocomplete="off" >
+        <h3>Cambio de Contraseña</h3>
+        <div class="row">
+            <div class="input-field col s6">
+                <input type="password" id="contra1" name="contra1"  />
+                <label for="contra1">Nueva contraseña</label>
+            </div>
+            <div class="input-field col s6">
+                <input type="password" id="contra2" />
+                <label for="contra2">Confimar Contraseña</label>
+            </div>
+        </div>
+        <button style="margin:20px 45%;" id="enviar">Cambiar</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <!-- CSS -->
+        <link href="../../../Recursos/css/tema.css" rel="stylesheet" type="text/css" />
+        <link href="../../Vacantes/Vista/css/jobsBook.css" rel="stylesheet" type="text/css" />
+        <link href="css/Perfil.css" rel="stylesheet" type="text/css" />
+
+        <!-- Scripts -->
+        <script src="../../../Recursos/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="../../../Recursos/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+        <script src="../../../Recursos/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="../../../Recursos/js/jquery.bpopup.min.js" type="text/javascript"></script>
+        <script src="../../../Recursos/js/Global.js" type="text/javascript"></script>
+        <script src="js/Perfil.js" type="text/javascript"></script>
+        <!-- Other scripts -->
+        <script type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <div id="Info" class="Recuadro">
+            <h2 class="Titulo"><span class="icon-user-tie"></span>&nbsp;Información del candicato</h2>
+            <div class="Recuadro-Interno">
+                <div class="Marco">
+                    <img src="../../../Recursos/images/male_user.png"  class="foto" id="fotoUsuario"/>
+                </div>
+                <h3 id="Nombre">Nombre del candidato</h3>
+                <span class="Experiencia" id="Experiencia">Tecnologías de la Información / Sistemas</span> 
+                <table class="Tabla">
+                    <tr>
+                        <th>Fecha de nacimiento</th>
+                        <td id="nacimiento">May 2, 1985</td>
+                    </tr>
+                    <tr>
+                        <th>Estado Civil</th>
+                        <td id="civil">Soltero</td>
+                    </tr>
+                    <tr>
+                        <th>Ultimo Grador de Estudio</th>
+                        <td id="estudios">Licenciatura</td>
+                    </tr>
+                </table>
+            </div>
+            <a href="../../Registro/Vista/frmBase.html"><span class="BotonLink">Ver Info</span></a><span class="BotonLink" style="margin:0px 200px 0px 200px;" onclick="verCV()">Ver CV</span><span class="BotonLink">Send </span>
+        </div>
+        
+        <div id="Aplicando" class="Recuadro">
+            <h2 class="Titulo"><span class="icon-cogs"></span>&nbsp;Proceso actual</h2>
+            <div class="Lateral" style="float:left;" ><span class="Fecha"></span></div>
+            <div class="Recuadro-Interno">
+              
+            </div>
+            <div class="Lateral" style="transform: scaleX(-1);float:right;top:-150px;"><span class="Fecha"></span></div>
+        </div>
+        <div id="Historial" class="Recuadro" style="overflow-y:auto;">
+            <h2 class="Titulo"><span class="icon-history"></span>&nbsp;Postulaciones pasadas</h2>
+            <table class="TablaAzul">
+                <thead>
+                <tr>
+                    <th style="width:15%; white-space: nowrap;">Fecha</th>
+                    <th >Puesto</th>
+                    <th style="width:30%; white-space: nowrap;">Empresa</th>
+                </tr>
+                </thead>
+                <tbody id="tb-historial"></tbody>
+            </table>
+            
+        </div>
+    </body>
+</html>

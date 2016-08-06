@@ -1,0 +1,21 @@
+<emaildef remitente="reportetflow@equipat.com.mx" host="AFRODITA.equipat.com.mx" usuario="reportetflow"  clave="*.tflow123" puerto="587">  
+  <destinatarios>
+    <destinatario>{$MAIL_CANDIDATO}</destinatario>
+    <cc></cc>
+    <bcc></bcc>
+  </destinatarios>
+  <body asunto="Continua con tu registro..." alias="Equipat.com.mx">
+    <![CDATA[
+    <div style="text-align:center;color:#4F6F19;">
+		<h3>¡Gracias!</h3>
+		<h3>Hola {$NOMBRE_CANDIDATO}</h3>
+		<p>Tu registro en la bolsa de trabajo de Sociedad Financiera Equípate S.A. de C.V. SOFOM E.N.R. ha sido exitoso.<br/> Para seguir con tu registro por favor valida tu correo dando click <a href="http://{$DOMINIO_SITE}/Modulos/Registro/Controlador/Registro.aspx?seccion=registo&op=validar&key={$CADENA_CANDIDATO}">aquí</a>.</p>
+		<br/>
+		<br/>
+		<br/>
+		<p>Si recibes este correo y tú no te registraste en nuestra bolsa de trabajo, por favor elimina este mensaje</p>
+		<img src="http://10.0.0.24/bolsa/Recursos/images/logoEmail.jpg">
+    </div>
+    ]]>
+  </body>
+</emaildef>

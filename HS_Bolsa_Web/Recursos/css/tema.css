@@ -1,0 +1,312 @@
+﻿@import url("icomoonFont.css");
+@import url("fontCocon.css");
+
+body
+{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'CoconLight' !important;
+    overflow: hidden;
+}
+
+input::-ms-clear
+{
+    display: none;
+}
+
+label
+{
+    display: block;
+    margin: 0px 0px 5px;
+    float: left;
+    color: #5E5E5E;
+    font-family: 'CoconLight' !important;
+}
+input, select
+{
+    font-family: 'CoconLight' !important;
+    color: #555;
+    height: 30px;
+    line-height: 15px;
+    padding: 0px 0px 0px 10px;
+    margin-top: 2px;
+    border: 1px solid #E5E5E5;
+    background: #FBFBFB;
+    outline: 0;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+    box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+    font: 14px HelveticaN;
+    overflow: hidden; /* Escondemos la parte sobrante */
+    white-space: nowrap; /* Indicamos que no realice salto de linea si no cabe en la anchura indicada */
+    text-overflow: ellipsis;
+}
+
+textarea
+{
+    font-family: 'CoconLight' !important;
+    height: 100px;
+    padding-top: 10px;
+    color: #555;
+    line-height: 15px;
+    margin-top: 2px;
+    border: 1px solid #E5E5E5;
+    background: #FBFBFB;
+    outline: 0;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+    box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+    font: 14px HelveticaN;
+}
+
+select
+{
+    background: url('/Recursos/images/down-arrow.png') no-repeat right, -moz-linear-gradient(top, #FBFBFB 0%, #E9E9E9 100%);
+    background: url('/Recursos/images/down-arrow.png') no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FBFBFB), color-stop(100%,#E9E9E9));
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    width: 100%;
+    height: 30px;
+}
+
+input.buscar
+{
+    font-family: 'CoconLight' !important;
+    color: #555;
+    height: 30px;
+    line-height: 15px;
+    padding: 0px 0px 0px 10px;
+    margin-top: 2px;
+    border: 0px;
+    width: 300px;
+    background: #FBFBFB;
+    outline: 0;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+    box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+    font: 14px HelveticaN;
+}
+
+.btn
+{
+    -moz-box-shadow: inset 0px 1px 0px 0px #c1ed9c;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #c1ed9c;
+    box-shadow: inset 0px 1px 0px 0px #c1ed9c;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #9dce2c), color-stop(1, #8cb82b) );
+    background: -moz-linear-gradient( center top, #9dce2c 5%, #8cb82b 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9dce2c', endColorstr='#8cb82b');
+    background-color: #9dce2c;
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+    text-indent: 0;
+    border: 1px solid #83c41a;
+    display: inline-block;
+    color: #ffffff;
+    font-family: 'CoconLight' !important;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 25px;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0px #689324;
+}
+
+button, input[type=submit]
+{
+    -moz-box-shadow: inset 0px 1px 0px 0px #c1ed9c;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #c1ed9c;
+    box-shadow: inset 0px 1px 0px 0px #c1ed9c;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #9dce2c), color-stop(1, #8cb82b) );
+    background: -moz-linear-gradient( center top, #9dce2c 5%, #8cb82b 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9dce2c', endColorstr='#8cb82b');
+    background-color: #9dce2c;
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+    text-indent: 0;
+    border: 1px solid #83c41a;
+    display: inline-block;
+    color: #ffffff;
+    font-family: 'CoconLight' !important;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 25px;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0px #689324;
+}
+
+button:hover, input[type=submit]:hover
+{
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #8cb82b), color-stop(1, #9dce2c) );
+    background: -moz-linear-gradient( center top, #8cb82b 5%, #9dce2c 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8cb82b', endColorstr='#9dce2c');
+    background-color: #8cb82b;
+}
+
+button:active, input[type=submit]:active
+{
+    position: relative;
+    top: 1px;
+}
+
+.TablaAzul
+{
+    margin: auto;
+    padding: 0px;
+    width: 85%;
+    box-shadow: 0px 5px 11px 0px rgba(0, 0, 0, 0.18), 0px 4px 15px 0px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ffffff;
+    -moz-border-radius-bottomleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.TablaAzul table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 85%;
+    height: 100%;
+    margin: auto;
+    padding: 0px;
+
+}
+
+.TablaAzul tr:last-child td:last-child
+{
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.TablaAzul table tr:first-child td:first-child
+{
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.TablaAzul table tr:first-child td:last-child
+{
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.TablaAzul tr:last-child td:first-child
+{
+    -moz-border-radius-bottomleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.TablaAzul tr:hover td
+{
+}
+
+.TablaAzul tr:nth-child(odd)
+{
+    background-color: #ffffff;
+}
+
+.TablaAzul tr:nth-child(even)
+{
+    
+    background-color: #9ed1dd;
+}
+
+.TablaAzul th
+{
+    background: -o-linear-gradient(bottom, #3eb2c8 5%, #3eb2c8 100%);
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3eb2c8), color-stop(1, #3eb2c8) );
+    background: -moz-linear-gradient( center top, #3eb2c8 5%, #3eb2c8 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3eb2c8", endColorstr="#3eb2c8");
+    background: -o-linear-gradient(top,#3eb2c8,3eb2c8);
+    background-color: #3eb2c8;
+    border: 0px solid #ffffff;
+    text-align: center;
+    border-width: 0px 0px 1px 1px;
+    font-size: 14px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.TablaAzul th:hover
+{
+   
+}
+
+.TablaAzul td
+{
+    vertical-align: middle;
+    border: 1px solid #ffffff;
+    border-width: 0px 1px 1px 0px;
+    text-align: center;
+    padding: 8px;
+    font-size: 10px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #000000;
+}
+
+.TablaAzul tr:last-child td
+{
+    border-width: 0px 1px 0px 0px;
+}
+
+.TablaAzul tr td:last-child
+{
+    border-width: 0px 0px 1px 0px;
+}
+
+.TablaAzul tr:last-child td:last-child
+{
+    border-width: 0px 0px 0px 0px;
+}
+
+.TablaAzul tr:first-child td:first-child
+{
+    border-width: 0px 0px 1px 0px;
+}
+
+.TablaAzul tr:first-child td:last-child
+{
+    border-width: 0px 0px 1px 1px;
+}
+
+h3
+{
+    color:#4F6F19;
+    font-family: 'Cocon' !important;
+}

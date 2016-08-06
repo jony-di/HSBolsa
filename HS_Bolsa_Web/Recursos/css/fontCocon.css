@@ -1,0 +1,21 @@
+@font-face {
+	font-family: 'Cocon';
+	src:url('/Recursos/fonts/Cocon/Cocon.eot?uzercf');
+	src:url('/Recursos/fonts/Cocon/Cocon.eot?#iefixuzercf') format('embedded-opentype'),
+		url('/Recursos/fonts/Cocon/Cocon.ttf?uzercf') format('truetype'),
+		url('/Recursos/fonts/Cocon/Cocon.woff?uzercf') format('woff'),
+		url('/Recursos/fonts/Cocon/Cocon.svg?uzercf#Cocon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'CoconLight';
+	src:url('/Recursos/fonts/CoconLight/CoconLight.eot?uzercf');
+	src:url('/Recursos/fonts/CoconLight/CoconLight.eot?#iefixuzercf') format('embedded-opentype'),
+		url('/Recursos/fonts/CoconLight/CoconLight.ttf?uzercf') format('truetype'),
+		url('/Recursos/fonts/CoconLight/CoconLight.woff?uzercf') format('woff'),
+		url('/Recursos/fonts/CoconLight/CoconLight.svg?uzercf#CoconLight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}

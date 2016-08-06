@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Secciones>
+  <perfil>
+    <datosFicha>
+      <sql>
+        <![CDATA[
+          SELECT 
+          Nombres +' ' + ApellidoPaterno + ' ' + ApellidoMaterno AS Nombre, 
+          CONVERT(varchar,FechaNacimiento,103) AS FechaNacimiento, AreasExperiencia.descripcion AS AreaExp, 
+          EstadoCivil.descripcion AS 'EstadoCivil',Escolaridad.TituloRecibido,Escolaridad.NivelEscolar,Escolaridad.SituacionAcademica
+          FROM CAN_Informacion Candidato
+          INNER JOIN CAT_AreasExperiencia AreasExperiencia
+          ON Candidato.cve_Area=AreasExperiencia.cve_AreasExperiencia
+          INNER JOIN CAT_estadocivil EstadoCivil
+          ON Candidato.cve_estadoCivil=EstadoCivil.cve_estadoCivil
+          INNER JOIN (SELECT A.RFC,A.Institucion,A.TituloRecibido,B.NivelEscolar,C.descripcion AS 'SituacionAcademica'  FROM CAN_Escolaridad A
+          INNER JOIN CAT_NivelEscolar B
+          ON A.Nivel = B.cve_NivelEscolar
+          INNER JOIN CAT_EstadoEstudios C
+          ON A.Estado=C.cve_EstadoEstudios) Escolaridad
+          ON Candidato.RFC= Escolaridad.RFC
+          WHERE Candidato.RFC = @RFC
+        ]]>
+      </sql>
+    </datosFicha>
+    <obtenerCV>
+      <sql>
+        <![CDATA[
+          SELECT CV_Base64 FROM CAN_Informacion WHERE RFC=@RFC
+        ]]>
+      </sql>
+    </obtenerCV>
+  </perfil>
+  <proceso>
+    
+  </proceso>
+  <historial>
+    <obtenerHistorial>
+      <sql>
+        <![CDATA[
+          SET LANGUAGE español;
+          SELECT Vacante.NombreVacante,CONVERT(VARCHAR,Candidato.fechaSolicitud,106) AS 'fechaSolicitud','Equipat' AS Empresa FROM CAN_SolicitudCandidato Candidato
+          INNER JOIN CON_SolicitudVacante Vacante
+          on Candidato.cve_solicitudvacante =Vacante.cve_solicitudvacante
+          WHERE Candidato.RFC =@RFC
+        ]]>
+      </sql>
+    </obtenerHistorial>
+  </historial>
+</Secciones>
